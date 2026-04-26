@@ -4,25 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; background-color: #f3f4f6; padding: 20px; color: #333; }
-        .container { max-width: 450px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h2 { text-align: left; color: #1f2937; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
-        .form-group { margin-bottom: 16px; text-align: left; } /* จัดเรียงชิดขอบซ้าย */
-        label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: left; }
+        h2 { color: #1f2937; margin-bottom: 20px; font-size: 24px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .form-group { margin-bottom: 16px; text-align: left; }
+        label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 16px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 16px; font-family: 'Sarabun', sans-serif; }
+        
+        /* สไตล์สำหรับปุ่มเวลา */
+        .slots-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+        .slot-btn { flex: 1 1 calc(50% - 10px); padding: 10px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; font-family: 'Sarabun', sans-serif; transition: 0.2s; }
+        .slot-available { background-color: #22c55e; color: white; cursor: pointer; }
+        .slot-available:hover { background-color: #16a34a; }
+        .slot-booked { background-color: #ef4444; color: white; cursor: not-allowed; }
+        .slot-selected { background-color: #2563eb; color: white; box-shadow: 0 0 0 3px #bfdbfe; }
+
         .qr-section { text-align: center; margin: 20px 0; padding: 15px; background: #f9fafb; border-radius: 8px; border: 1px dashed #cbd5e1; }
         .qr-section img { max-width: 200px; border-radius: 8px; margin-bottom: 10px; }
-        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #1d4ed8; }
-        button:disabled { background: #9ca3af; cursor: not-allowed; }
-        #statusMessage { margin-top: 15px; font-weight: bold; text-align: center; font-size: 14px; }
+        button[type="submit"] { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; font-family: 'Sarabun', sans-serif; }
+        button[type="submit"]:hover { background: #1d4ed8; }
+        button[type="submit"]:disabled { background: #9ca3af; cursor: not-allowed; }
+        #statusMessage { margin-top: 15px; font-weight: bold; text-align: center; font-size: 16px; }
+        .loading { font-size: 14px; color: #6b7280; margin-top: 5px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>จองคิว - The Core By Tasuya</h2>
+    <h2>จองคิวไพ่ : หมอวิทยา ธรรมนาย</h2>
     
     <form id="bookingForm">
         <div class="form-group">
@@ -32,34 +43,36 @@
 
         <div class="form-group">
             <label>รูปแบบการดู:</label>
-            <select id="type" onchange="calculateEndTime()" required>
+            <select id="type" onchange="renderSlots()" required>
                 <option value="" disabled selected>-- เลือกรูปแบบ --</option>
-                <option value="ไพ่ 3 ใบ (1 ชม.)">ไพ่ 3 ใบ (ใช้เวลา 1 ชม. + พัก 30 นาที)</option>
-                <option value="ไพ่ 12 ใบ (2 ชม.)">ไพ่ 12 ใบ (ใช้เวลา 2 ชม. + พัก 30 นาที)</option>
+                <option value="แบบระยะสั้น 12 ใบ (699 บาท)">แบบระยะสั้น 12 ใบ (60 นาที)</option>
+                <option value="แบบประจำปี (1,099 บาท)">แบบประจำปี (60 นาที)</option>
+                <option value="แบบละเอียด (1,999 บาท)">แบบละเอียด (120 นาที)</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label>วันที่จอง:</label>
-            <input type="date" id="date" required>
+            <label>วันที่ต้องการจอง:</label>
+            <select id="dateSelect" onchange="renderSlots()" required disabled>
+                <option value="" disabled selected>กำลังโหลดวันว่าง...</option>
+            </select>
         </div>
 
         <div class="form-group">
-            <label>เวลาเริ่ม (ตัวอย่าง 13:00):</label>
-            <input type="time" id="startTime" onchange="calculateEndTime()" required>
-        </div>
-
-        <div class="form-group">
-            <label>เวลาสิ้นสุด (ระบบคำนวณให้):</label>
-            <input type="time" id="endTime" readonly style="background-color: #e5e7eb;">
+            <label>เลือกเวลา:</label>
+            <div id="slotsContainer" class="slots-container">
+                <div class="loading">กรุณาเลือกรูปแบบและวันที่เพื่อดูเวลาว่าง</div>
+            </div>
+            <input type="hidden" id="selectedStartTime" required>
+            <input type="hidden" id="selectedEndTime">
         </div>
 
         <div class="qr-section">
-            <p style="font-size: 14px; font-weight: bold; margin-top:0;">สแกน QR Code เพื่อชำระค่าครู</p>
+            <p style="font-size: 16px; font-weight: bold; margin-top:0;">กรุณาสแกน QR Code เพื่อชำระค่าครู</p>
             <img src="qr_wt_pmy.jpg" alt="QR Code" onerror="this.style.display='none'">
             
-            <div class="form-group" style="margin-top: 15px;">
-                <label style="text-align: left;">แนบสลิปโอนเงิน (บังคับ):</label>
+            <div class="form-group" style="margin-top: 15px; text-align: left;">
+                <label>แนบสลิปโอนเงิน (บังคับ):</label>
                 <input type="file" id="slip" accept="image/*" required>
             </div>
         </div>
@@ -74,67 +87,163 @@
     // === นำ URL ที่คัดลอกมาจาก Apps Script มาวางในเครื่องหมายคำพูดด้านล่างนี้ ===
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbywADpxQ-BTJ6XjDcTynOLzg0xFcwqfb8Rr67GVIYmWLNIHCkmXi1qvVhGwhvn_9KD1/exec"; 
     
-    function calculateEndTime() {
-        const type = document.getElementById('type').value;
-        const startTime = document.getElementById('startTime').value;
-        if (!type || !startTime) return;
+    let configData = [];
+    let bookedData = [];
 
-        let addMinutes = 0;
-        if (type.includes('1 ชม.')) addMinutes = 90; // 60 + 30 พัก
-        if (type.includes('2 ชม.')) addMinutes = 150; // 120 + 30 พัก
+    // ดึงข้อมูลวันว่างเมื่อโหลดหน้าเว็บ
+    window.onload = function() {
+        fetch(WEB_APP_URL)
+            .then(res => res.json())
+            .then(data => {
+                configData = data.availableDays;
+                bookedData = data.bookedSlots;
+                populateDates();
+            }).catch(err => {
+                document.getElementById('dateSelect').innerHTML = `<option value="">โหลดข้อมูลไม่สำเร็จ กรุณารีเฟรช</option>`;
+            });
+    };
 
-        const [hours, minutes] = startTime.split(':').map(Number);
-        const endDate = new Date(0, 0, 0, hours, minutes + addMinutes, 0);
+    function populateDates() {
+        const dateSelect = document.getElementById('dateSelect');
+        dateSelect.innerHTML = `<option value="" disabled selected>-- เลือกวันที่ --</option>`;
+        configData.forEach(day => {
+            let option = document.createElement('option');
+            option.value = day.date;
+            option.text = day.date;
+            dateSelect.appendChild(option);
+        });
+        dateSelect.disabled = false;
+    }
 
-        const endHours = String(endDate.getHours()).padStart(2, '0');
-        const endMins = String(endDate.getMinutes()).padStart(2, '0');
-        document.getElementById('endTime').value = `${endHours}:${endMins}`;
+    function timeToMins(timeStr) {
+        let parts = timeStr.split(':');
+        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    }
+
+    function minsToTime(mins) {
+        let h = Math.floor(mins / 60).toString().padStart(2, '0');
+        let m = (mins % 60).toString().padStart(2, '0');
+        return `${h}:${m}`;
+    }
+
+    function renderSlots() {
+        const typeSelect = document.getElementById('type').value;
+        const dateSelect = document.getElementById('dateSelect').value;
+        const slotsDiv = document.getElementById('slotsContainer');
+        
+        document.getElementById('selectedStartTime').value = "";
+        document.getElementById('selectedEndTime').value = "";
+
+        if (!typeSelect || !dateSelect) {
+            slotsDiv.innerHTML = '<div class="loading">กรุณาเลือกรูปแบบและวันที่เพื่อดูเวลาว่าง</div>';
+            return;
+        }
+
+        slotsDiv.innerHTML = '';
+        
+        let duration = 0; let buffer = 0;
+        if (typeSelect.includes('แบบระยะสั้น') || typeSelect.includes('แบบประจำปี')) {
+            duration = 60; buffer = 30;
+        } else if (typeSelect.includes('แบบละเอียด')) {
+            duration = 120; buffer = 40;
+        }
+        let totalBlock = duration + buffer;
+
+        // หาวันที่เลือกจากข้อมูลที่ดึงมา
+        let dayConf = configData.find(d => d.date === dateSelect);
+        if(!dayConf) return;
+
+        let startMins = timeToMins(dayConf.start);
+        let endMins = timeToMins(dayConf.end);
+
+        // สร้างปุ่มเวลา
+        for (let t = startMins; (t + duration) <= endMins; t += totalBlock) {
+            let slotStartStr = minsToTime(t);
+            let slotEndStr = minsToTime(t + duration);
+            let blockEndMins = t + totalBlock;
+
+            // ตรวจสอบว่าคิวนี้ว่างไหม
+            let isBooked = false;
+            for (let b of bookedData) {
+                if (b.date === dateSelect) {
+                    let bStart = timeToMins(b.startTime);
+                    let bEnd = timeToMins(b.endTime); // เวลาจบที่รวมพักของคนก่อนหน้าแล้ว
+                    if (t < bEnd && blockEndMins > bStart) {
+                        isBooked = true; break;
+                    }
+                }
+            }
+
+            let btn = document.createElement('button');
+            btn.type = 'button';
+            
+            if (isBooked) {
+                btn.className = 'slot-btn slot-booked';
+                btn.innerText = `${slotStartStr} - ${slotEndStr} (จองแล้ว)`;
+                btn.disabled = true;
+            } else {
+                btn.className = 'slot-btn slot-available';
+                btn.innerText = `${slotStartStr} - ${slotEndStr}`;
+                btn.onclick = function() {
+                    // ลบสถานะเลือกของปุ่มอื่น
+                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('slot-selected'));
+                    btn.classList.add('slot-selected');
+                    // เซ็ตค่าลงในฟอร์มซ่อน
+                    document.getElementById('selectedStartTime').value = slotStartStr;
+                    document.getElementById('selectedEndTime').value = minsToTime(blockEndMins); // เก็บเวลาจบแบบรวมพักลงชีท
+                };
+            }
+            slotsDiv.appendChild(btn);
+        }
+        if(slotsDiv.innerHTML === '') {
+            slotsDiv.innerHTML = '<div class="loading" style="color:red;">ไม่มีเวลาว่างเพียงพอสำหรับรูปแบบนี้ในวันนี้ครับ</div>';
+        }
     }
 
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const btn = document.getElementById('submitBtn');
-        const msg = document.getElementById('statusMessage');
+        if(!document.getElementById('selectedStartTime').value) {
+            alert('กรุณากดเลือกเวลาที่ต้องการจองด้วยครับ (ปุ่มสีเขียว)'); return;
+        }
+
         const fileInput = document.getElementById('slip');
-        
         if (fileInput.files.length === 0) {
             alert('กรุณาแนบรูปสลิปโอนเงินครับ'); return;
         }
 
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('statusMessage');
         btn.disabled = true;
         btn.innerText = "กำลังบันทึกข้อมูล กรุณารอสักครู่...";
         msg.innerText = "";
-        msg.style.color = "black";
 
         const file = fileInput.files[0];
         const reader = new FileReader();
 
         reader.onload = function(event) {
-            const base64Data = event.target.result;
-            
             const payload = {
                 name: document.getElementById('name').value,
                 type: document.getElementById('type').value,
-                date: document.getElementById('date').value,
-                startTime: document.getElementById('startTime').value,
-                endTime: document.getElementById('endTime').value,
-                base64: base64Data,
+                date: document.getElementById('dateSelect').value,
+                startTime: document.getElementById('selectedStartTime').value,
+                endTime: document.getElementById('selectedEndTime').value,
+                base64: event.target.result,
                 fileName: file.name
             };
 
-            fetch(WEB_APP_URL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            })
-            .then(response => response.json())
+            fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) })
+            .then(res => res.json())
             .then(data => {
                 btn.disabled = false;
                 btn.innerText = "ยืนยันการจองคิว";
                 if(data.status === "success") {
                     msg.style.color = "green";
-                    msg.innerText = "✅ จองคิวสำเร็จ! ข้อมูลและสลิปถูกส่งเรียบร้อยแล้วครับ";
+                    msg.innerText = "✅ จองคิวสำเร็จเรียบร้อยครับ";
                     document.getElementById('bookingForm').reset();
+                    document.getElementById('slotsContainer').innerHTML = '<div class="loading">กรุณาเลือกรูปแบบและวันที่เพื่อดูเวลาว่าง</div>';
+                    // โหลดข้อมูลใหม่เพื่ออัปเดตปุ่มแดง
+                    window.onload(); 
                 } else {
                     msg.style.color = "red";
                     msg.innerText = "❌ " + data.message;
@@ -144,7 +253,7 @@
                 btn.disabled = false;
                 btn.innerText = "ยืนยันการจองคิว";
                 msg.style.color = "red";
-                msg.innerText = "เกิดข้อผิดพลาดในการส่งข้อมูล รบกวนลองใหม่อีกครั้งครับ";
+                msg.innerText = "เกิดข้อผิดพลาดในการส่งข้อมูลครับ";
             });
         };
         reader.readAsDataURL(file);
