@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>.จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
+    <title>จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; background-color: #f3f4f6; padding: 20px; color: #333; }
@@ -53,7 +53,7 @@
         <div class="form-group">
             <label>วันที่ต้องการจอง:</label>
             <select id="dateSelect" onchange="renderSlots()" required disabled>
-                <option value="" disabled selected>-- กำลังโหลดข้อมูล... --</option>
+                <option value="" disabled selected>-- กรุณาเลือกรูปแบบไพ่ด้านบนก่อน --</option>
             </select>
         </div>
 
@@ -92,22 +92,15 @@
         if (!dateStr) return '';
         let parts = dateStr.split('/');
         if (parts.length !== 3) return dateStr;
-        
         let day = parseInt(parts[0], 10);
         let month = parseInt(parts[1], 10) - 1;
         let year = parseInt(parts[2], 10);
-        
         let beYear = year < 2500 ? year + 543 : year; 
         let ceYear = year > 2500 ? year - 543 : year;
         let dateObj = new Date(ceYear, month, day);
-        
         let thaiDays = ["วันอาทิตย์", "วันจันทร์", "วันอังคาร", "วันพุธ", "วันพฤหัสบดี", "วันศุกร์", "วันเสาร์"];
         let thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-        
-        let dayName = thaiDays[dateObj.getDay()];
-        let monthName = thaiMonths[month];
-        
-        return `${dayName} ที่ ${day} ${monthName} ${beYear}`;
+        return `${thaiDays[dateObj.getDay()]} ที่ ${day} ${thaiMonths[month]} ${beYear}`;
     }
 
     window.onload = function() {
@@ -148,50 +141,44 @@
         }
 
         dateSelect.innerHTML = `<option value="" disabled selected>-- เลือกวันที่ --</option>`;
-        
-        // ปรับเวลาพักเป็น 30 นาที เท่ากันทุกรูปแบบ
-        let duration = 0; let buffer = 30; 
-        if (typeSelect.includes('แบบระยะสั้น') || typeSelect.includes('แบบประจำปี')) {
-            duration = 60;
-        } else if (typeSelect.includes('แบบละเอียด')) {
-            duration = 120;
-        }
-        let totalBlock = duration + buffer;
-
         let hasAvailableDate = false;
 
         configData.forEach(day => {
-            if (typeSelect.includes('แบบละเอียด')) {
-                const type3BookedCount = bookedData.filter(b => 
-                    b.date === day.date && b.type && b.type.includes('แบบละเอียด')
-                ).length;
-                if (type3BookedCount >= 2) return; 
-            }
-
             let startMins = timeToMins(day.start);
             let endMins = timeToMins(day.end);
-            let hasAtLeastOneFreeSlot = false;
-
-            for (let t = startMins; (t + duration) <= endMins; t += totalBlock) {
-                let blockEndMins = t + totalBlock;
-                let isBooked = false;
-
-                for (let b of bookedData) {
-                    if (b.date === day.date) {
-                        let bStart = timeToMins(b.startTime);
-                        // ระบบอ่านเวลาจบจากชีท (เช่น 10:30) แล้วบวก 30 นาทีในใจ เพื่อตั้งเป็นกำแพงเวลาพัก
-                        let bEnd = timeToMins(b.endTime) + 30; 
-                        if (t < bEnd && blockEndMins > bStart) {
-                            isBooked = true; break;
-                        }
-                    }
+            let duration = typeSelect.includes('แบบละเอียด') ? 120 : 60;
+            let buffer = 30;
+            
+            let possibleStartTimes = [];
+            // ถ้าเป็นแบบละเอียด ให้ใช้ Fixed Slots (9:30 และ 13:30)
+            if (typeSelect.includes('แบบละเอียด')) {
+                const type3BookedCount = bookedData.filter(b => b.date === day.date && b.type && b.type.includes('แบบละเอียด')).length;
+                if (type3BookedCount < 2) {
+                    possibleStartTimes = [570, 810]; // 9:30 และ 13:30
                 }
-                
-                if (!isBooked) {
-                    hasAtLeastOneFreeSlot = true;
-                    break;
+            } else {
+                // ถ้าเป็นแบบ 1-2 ให้ใช้ Sequential Slots
+                for (let t = startMins; (t + duration) <= endMins; t += (duration + buffer)) {
+                    possibleStartTimes.push(t);
                 }
             }
+
+            let hasAtLeastOneFreeSlot = false;
+            possibleStartTimes.forEach(t => {
+                if (t >= startMins && (t + duration) <= endMins) {
+                    let isBooked = false;
+                    for (let b of bookedData) {
+                        if (b.date === day.date) {
+                            let bStart = timeToMins(b.startTime);
+                            let bEnd = timeToMins(b.endTime) + 30;
+                            if (t < bEnd && (t + duration + 30) > bStart) {
+                                isBooked = true; break;
+                            }
+                        }
+                    }
+                    if (!isBooked) hasAtLeastOneFreeSlot = true;
+                }
+            });
 
             if (hasAtLeastOneFreeSlot) {
                 let option = document.createElement('option');
@@ -217,38 +204,35 @@
         
         document.getElementById('selectedStartTime').value = "";
         document.getElementById('selectedEndTime').value = "";
-
         if (!typeSelect || !dateSelect) return;
-
         slotsDiv.innerHTML = '';
         
-        // ปรับเวลาพักเป็น 30 นาที เท่ากันทุกรูปแบบ
-        let duration = 0; let buffer = 30;
-        if (typeSelect.includes('แบบระยะสั้น') || typeSelect.includes('แบบประจำปี')) {
-            duration = 60;
-        } else if (typeSelect.includes('แบบละเอียด')) {
-            duration = 120;
-        }
-        let totalBlock = duration + buffer;
-
         let dayConf = configData.find(d => d.date === dateSelect);
         if(!dayConf) return;
-
         let startMins = timeToMins(dayConf.start);
         let endMins = timeToMins(dayConf.end);
+        let duration = typeSelect.includes('แบบละเอียด') ? 120 : 60;
+        
+        let possibleStartTimes = [];
+        if (typeSelect.includes('แบบละเอียด')) {
+            possibleStartTimes = [570, 810];
+        } else {
+            for (let t = startMins; (t + duration) <= endMins; t += (duration + 30)) {
+                possibleStartTimes.push(t);
+            }
+        }
 
-        for (let t = startMins; (t + duration) <= endMins; t += totalBlock) {
+        possibleStartTimes.forEach(t => {
+            if (t < startMins || (t + duration) > endMins) return;
+
             let slotStartStr = minsToTime(t);
-            let slotEndStr = minsToTime(t + duration); // เวลาสิ้นสุดจริงๆ ที่ใช้ดูดวง
-            let blockEndMins = t + totalBlock; // เวลาสิ้นสุดรวมพัก (เพื่อใช้ล็อกคิวหน้าเว็บ)
-
+            let slotEndStr = minsToTime(t + duration);
             let isBooked = false;
             for (let b of bookedData) {
                 if (b.date === dateSelect) {
                     let bStart = timeToMins(b.startTime);
-                    // บวกพัก 30 นาทีต่อท้ายเวลาที่ดึงมาจาก Sheet เพื่อกันคิวชน
-                    let bEnd = timeToMins(b.endTime) + 30; 
-                    if (t < bEnd && blockEndMins > bStart) {
+                    let bEnd = timeToMins(b.endTime) + 30;
+                    if (t < bEnd && (t + duration + 30) > bStart) {
                         isBooked = true; break;
                     }
                 }
@@ -256,7 +240,6 @@
 
             let btn = document.createElement('button');
             btn.type = 'button';
-            
             if (isBooked) {
                 btn.className = 'slot-btn slot-booked';
                 btn.innerText = `${slotStartStr} - ${slotEndStr} (จองแล้ว)`;
@@ -268,72 +251,45 @@
                     document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('slot-selected'));
                     btn.classList.add('slot-selected');
                     document.getElementById('selectedStartTime').value = slotStartStr;
-                    // จุดสำคัญ: เก็บเฉพาะเวลาจบ (เช่น 10:30) ไปบันทึก ไม่รวม 30 นาทีพัก
-                    document.getElementById('selectedEndTime').value = slotEndStr; 
+                    document.getElementById('selectedEndTime').value = slotEndStr;
                 };
             }
             slotsDiv.appendChild(btn);
-        }
+        });
     }
 
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        
-        if(!document.getElementById('selectedStartTime').value) {
-            alert('กรุณากดเลือกเวลาที่ต้องการจองด้วยครับ (ปุ่มสีเขียว)'); return;
-        }
-
+        if(!document.getElementById('selectedStartTime').value) { alert('กรุณากดเลือกเวลาที่ต้องการจองครับ'); return; }
         const fileInput = document.getElementById('slip');
-        if (fileInput.files.length === 0) {
-            alert('กรุณาแนบรูปสลิปโอนเงินครับ'); return;
-        }
-
+        if (fileInput.files.length === 0) { alert('กรุณาแนบรูปสลิปโอนเงินครับ'); return; }
         const btn = document.getElementById('submitBtn');
-        const msg = document.getElementById('statusMessage');
         btn.disabled = true;
-        btn.innerText = "กำลังบันทึกข้อมูล กรุณารอสักครู่...";
-        msg.innerText = "";
-
-        const file = fileInput.files[0];
+        btn.innerText = "กำลังบันทึกข้อมูล...";
         const reader = new FileReader();
-
         reader.onload = function(event) {
             const payload = {
                 name: document.getElementById('name').value,
                 type: document.getElementById('type').value,
                 date: document.getElementById('dateSelect').value,
                 startTime: document.getElementById('selectedStartTime').value,
-                endTime: document.getElementById('selectedEndTime').value, // ส่งไปบันทึกเฉพาะเวลาดูดวง
+                endTime: document.getElementById('selectedEndTime').value,
                 base64: event.target.result,
-                fileName: file.name
+                fileName: fileInput.files[0].name
             };
-
             fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) })
             .then(res => res.json())
             .then(data => {
                 btn.disabled = false;
                 btn.innerText = "ยืนยันการจองคิว";
                 if(data.status === "success") {
-                    msg.style.color = "green";
-                    msg.innerText = "✅ จองคิวสำเร็จเรียบร้อยครับ";
+                    alert('✅ จองคิวสำเร็จเรียบร้อยครับ');
                     document.getElementById('bookingForm').reset();
-                    document.getElementById('slotsContainer').innerHTML = '<div class="loading">กรุณาเลือกรูปแบบและวันที่เพื่อดูเวลาว่าง</div>';
-                    document.getElementById('dateSelect').innerHTML = `<option value="" disabled selected>-- กรุณาเลือกรูปแบบไพ่ด้านบนก่อน --</option>`;
-                    document.getElementById('dateSelect').disabled = true;
-                    window.onload(); 
-                } else {
-                    msg.style.color = "red";
-                    msg.innerText = "❌ " + data.message;
-                }
-            })
-            .catch(error => {
-                btn.disabled = false;
-                btn.innerText = "ยืนยันการจองคิว";
-                msg.style.color = "red";
-                msg.innerText = "เกิดข้อผิดพลาดในการส่งข้อมูลครับ";
-            });
+                    window.onload();
+                } else { alert('❌ ' + data.message); }
+            }).catch(err => { btn.disabled = false; alert('เกิดข้อผิดพลาดในการส่งข้อมูลครับ'); });
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(fileInput.files[0]);
     });
 </script>
 
