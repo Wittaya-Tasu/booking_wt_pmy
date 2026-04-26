@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>.จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
+    <title>จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; background-color: #f3f4f6; padding: 20px; color: #333; }
@@ -83,6 +83,7 @@
 </div>
 
 <script>
+    // *** อย่าลืมวาง URL ของคุณตรงนี้นะครับ ***
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoBDD-kQ9T_oJKEtdvk7hSiFlJ569GLev4f7_EejXtUYWspdPPyUcdA8zGJdYH7BHA/exec"; 
     
     let configData = [];
@@ -110,7 +111,6 @@
         return `${dayName} ที่ ${day} ${monthName} ${beYear}`;
     }
 
-    // โหลดข้อมูลเมื่อเปิดหน้าเว็บ แต่ยังไม่ใส่ในช่องวันที่จนกว่าจะเลือกรูปแบบ
     window.onload = function() {
         fetch(WEB_APP_URL)
             .then(res => res.json())
@@ -134,13 +134,11 @@
         return `${h}:${m}`;
     }
 
-    // เมื่อเจ้าชะตาเปลี่ยน "รูปแบบไพ่" ให้คัดกรองวันที่ใหม่
     function handleTypeChange() {
         const typeSelect = document.getElementById('type').value;
         const dateSelect = document.getElementById('dateSelect');
         const slotsDiv = document.getElementById('slotsContainer');
         
-        // รีเซ็ต Slot เวลา
         slotsDiv.innerHTML = '<div class="loading">กรุณาเลือกรูปแบบและวันที่เพื่อดูเวลาว่าง</div>';
         document.getElementById('selectedStartTime').value = "";
         document.getElementById('selectedEndTime').value = "";
@@ -163,15 +161,14 @@
         let hasAvailableDate = false;
 
         configData.forEach(day => {
-            // กฎข้อที่ 1: จำกัดแบบละเอียด 2 คิวต่อวัน
+            // จำกัดแบบละเอียด 2 คิวต่อวัน (เช็ค b.type เพื่อป้องกัน Error)
             if (typeSelect.includes('แบบละเอียด')) {
                 const type3BookedCount = bookedData.filter(b => 
                     b.date === day.date && b.type && b.type.includes('แบบละเอียด')
                 ).length;
-                if (type3BookedCount >= 2) return; // ถ้าครบ 2 คิวแล้ว ข้ามวันนี้ไปเลย
+                if (type3BookedCount >= 2) return; 
             }
 
-            // กฎข้อที่ 2: เช็คว่าวันนั้นๆ มีเวลาว่างเหลือให้กดอย่างน้อย 1 Slot ไหม
             let startMins = timeToMins(day.start);
             let endMins = timeToMins(day.end);
             let hasAtLeastOneFreeSlot = false;
@@ -184,21 +181,18 @@
                     if (b.date === day.date) {
                         let bStart = timeToMins(b.startTime);
                         let bEnd = timeToMins(b.endTime);
-                        // ถ้าเวลาคาบเกี่ยวกัน
                         if (t < bEnd && blockEndMins > bStart) {
                             isBooked = true; break;
                         }
                     }
                 }
                 
-                // ถ้าเจอ Slot ว่างอย่างน้อย 1 อัน ให้แสดงวันนี้ได้
                 if (!isBooked) {
                     hasAtLeastOneFreeSlot = true;
                     break;
                 }
             }
 
-            // ถ้ารอดจากเงื่อนไขทั้งหมด (ไม่เต็ม 2 คิว และมีเวลาว่างให้กด) ก็จับใส่วันที่
             if (hasAtLeastOneFreeSlot) {
                 let option = document.createElement('option');
                 option.value = day.date;
@@ -208,7 +202,6 @@
             }
         });
 
-        // ถ้าไม่มีวันว่างเหลือเลยสำหรับรูปแบบนี้
         if (!hasAvailableDate) {
             dateSelect.innerHTML = `<option value="" disabled selected>-- ไม่มีวันว่างสำหรับรูปแบบนี้ --</option>`;
             dateSelect.disabled = true;
@@ -217,7 +210,6 @@
         }
     }
 
-    // เมื่อเจ้าชะตาเลือก "วันที่" ให้วาดปุ่มเวลา
     function renderSlots() {
         const typeSelect = document.getElementById('type').value;
         const dateSelect = document.getElementById('dateSelect').value;
@@ -244,13 +236,11 @@
         let startMins = timeToMins(dayConf.start);
         let endMins = timeToMins(dayConf.end);
 
-        // วาดปุ่มเวลาทั้งหมด
         for (let t = startMins; (t + duration) <= endMins; t += totalBlock) {
             let slotStartStr = minsToTime(t);
             let slotEndStr = minsToTime(t + duration);
             let blockEndMins = t + totalBlock;
 
-            // ตรวจสอบว่าคิวนี้คาบเกี่ยวกับที่มีคนจองไปแล้วไหม
             let isBooked = false;
             for (let b of bookedData) {
                 if (b.date === dateSelect) {
@@ -265,13 +255,11 @@
             let btn = document.createElement('button');
             btn.type = 'button';
             
-            // ถ้าคาบเกี่ยว = ให้แสดงเป็นสีแดง และกดไม่ได้
             if (isBooked) {
                 btn.className = 'slot-btn slot-booked';
                 btn.innerText = `${slotStartStr} - ${slotEndStr} (จองแล้ว)`;
                 btn.disabled = true;
             } else {
-                // ถ้าว่าง = สีเขียว
                 btn.className = 'slot-btn slot-available';
                 btn.innerText = `${slotStartStr} - ${slotEndStr}`;
                 btn.onclick = function() {
@@ -329,7 +317,6 @@
                     document.getElementById('slotsContainer').innerHTML = '<div class="loading">กรุณาเลือกรูปแบบและวันที่เพื่อดูเวลาว่าง</div>';
                     document.getElementById('dateSelect').innerHTML = `<option value="" disabled selected>-- กรุณาเลือกรูปแบบไพ่ด้านบนก่อน --</option>`;
                     document.getElementById('dateSelect').disabled = true;
-                    // โหลดข้อมูลจาก Google Sheet ใหม่
                     window.onload(); 
                 } else {
                     msg.style.color = "red";
