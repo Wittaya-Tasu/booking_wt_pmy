@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; background-color: #f3f4f6; padding: 20px; color: #333; }
+        .container { max-width: 450px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2 { text-align: left; color: #1f2937; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .form-group { margin-bottom: 16px; text-align: left; } /* จัดเรียงชิดขอบซ้าย */
+        label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 14px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .qr-section { text-align: center; margin: 20px 0; padding: 15px; background: #f9fafb; border-radius: 8px; border: 1px dashed #cbd5e1; }
+        .qr-section img { max-width: 200px; border-radius: 8px; margin-bottom: 10px; }
+        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #1d4ed8; }
+        button:disabled { background: #9ca3af; cursor: not-allowed; }
+        #statusMessage { margin-top: 15px; font-weight: bold; text-align: center; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>จองคิว - The Core By Tasuya</h2>
+    
+    <form id="bookingForm">
+        <div class="form-group">
+            <label>ชื่อเจ้าชะตา:</label>
+            <input type="text" id="name" placeholder="กรอกชื่อ-นามสกุล หรือ ชื่อเล่น" required>
+        </div>
+
+        <div class="form-group">
+            <label>รูปแบบการดู:</label>
+            <select id="type" onchange="calculateEndTime()" required>
+                <option value="" disabled selected>-- เลือกรูปแบบ --</option>
+                <option value="ไพ่ 3 ใบ (1 ชม.)">ไพ่ 3 ใบ (ใช้เวลา 1 ชม. + พัก 30 นาที)</option>
+                <option value="ไพ่ 12 ใบ (2 ชม.)">ไพ่ 12 ใบ (ใช้เวลา 2 ชม. + พัก 30 นาที)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>วันที่จอง:</label>
+            <input type="date" id="date" required>
+        </div>
+
+        <div class="form-group">
+            <label>เวลาเริ่ม (ตัวอย่าง 13:00):</label>
+            <input type="time" id="startTime" onchange="calculateEndTime()" required>
+        </div>
+
+        <div class="form-group">
+            <label>เวลาสิ้นสุด (ระบบคำนวณให้):</label>
+            <input type="time" id="endTime" readonly style="background-color: #e5e7eb;">
+        </div>
+
+        <div class="qr-section">
+            <p style="font-size: 14px; font-weight: bold; margin-top:0;">สแกน QR Code เพื่อชำระค่าครู</p>
+            <img src="qr_wt_pmy.jpg" alt="QR Code" onerror="this.style.display='none'">
+            
+            <div class="form-group" style="margin-top: 15px;">
+                <label style="text-align: left;">แนบสลิปโอนเงิน (บังคับ):</label>
+                <input type="file" id="slip" accept="image/*" required>
+            </div>
+        </div>
+
+        <button type="submit" id="submitBtn">ยืนยันการจองคิว</button>
+    </form>
+    
+    <div id="statusMessage"></div>
+</div>
+
+<script>
+    // === นำ URL ที่คัดลอกมาจาก Apps Script มาวางในเครื่องหมายคำพูดด้านล่างนี้ ===
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbywADpxQ-BTJ6XjDcTynOLzg0xFcwqfb8Rr67GVIYmWLNIHCkmXi1qvVhGwhvn_9KD1/exec"; 
+    
+    function calculateEndTime() {
+        const type = document.getElementById('type').value;
+        const startTime = document.getElementById('startTime').value;
+        if (!type || !startTime) return;
+
+        let addMinutes = 0;
+        if (type.includes('1 ชม.')) addMinutes = 90; // 60 + 30 พัก
+        if (type.includes('2 ชม.')) addMinutes = 150; // 120 + 30 พัก
+
+        const [hours, minutes] = startTime.split(':').map(Number);
+        const endDate = new Date(0, 0, 0, hours, minutes + addMinutes, 0);
+
+        const endHours = String(endDate.getHours()).padStart(2, '0');
+        const endMins = String(endDate.getMinutes()).padStart(2, '0');
+        document.getElementById('endTime').value = `${endHours}:${endMins}`;
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('statusMessage');
+        const fileInput = document.getElementById('slip');
+        
+        if (fileInput.files.length === 0) {
+            alert('กรุณาแนบรูปสลิปโอนเงินครับ'); return;
+        }
+
+        btn.disabled = true;
+        btn.innerText = "กำลังบันทึกข้อมูล กรุณารอสักครู่...";
+        msg.innerText = "";
+        msg.style.color = "black";
+
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+            const base64Data = event.target.result;
+            
+            const payload = {
+                name: document.getElementById('name').value,
+                type: document.getElementById('type').value,
+                date: document.getElementById('date').value,
+                startTime: document.getElementById('startTime').value,
+                endTime: document.getElementById('endTime').value,
+                base64: base64Data,
+                fileName: file.name
+            };
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                btn.disabled = false;
+                btn.innerText = "ยืนยันการจองคิว";
+                if(data.status === "success") {
+                    msg.style.color = "green";
+                    msg.innerText = "✅ จองคิวสำเร็จ! ข้อมูลและสลิปถูกส่งเรียบร้อยแล้วครับ";
+                    document.getElementById('bookingForm').reset();
+                } else {
+                    msg.style.color = "red";
+                    msg.innerText = "❌ " + data.message;
+                }
+            })
+            .catch(error => {
+                btn.disabled = false;
+                btn.innerText = "ยืนยันการจองคิว";
+                msg.style.color = "red";
+                msg.innerText = "เกิดข้อผิดพลาดในการส่งข้อมูล รบกวนลองใหม่อีกครั้งครับ";
+            });
+        };
+        reader.readAsDataURL(file);
+    });
+</script>
+
+</body>
+</html>
