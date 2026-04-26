@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
+    <title>.จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; background-color: #f3f4f6; padding: 20px; color: #333; }
@@ -83,7 +83,6 @@
 </div>
 
 <script>
-    // *** อย่าลืมวาง URL ของคุณตรงนี้นะครับ ***
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoBDD-kQ9T_oJKEtdvk7hSiFlJ569GLev4f7_EejXtUYWspdPPyUcdA8zGJdYH7BHA/exec"; 
     
     let configData = [];
@@ -150,18 +149,18 @@
 
         dateSelect.innerHTML = `<option value="" disabled selected>-- เลือกวันที่ --</option>`;
         
-        let duration = 0; let buffer = 0;
+        // ปรับเวลาพักเป็น 30 นาที เท่ากันทุกรูปแบบ
+        let duration = 0; let buffer = 30; 
         if (typeSelect.includes('แบบระยะสั้น') || typeSelect.includes('แบบประจำปี')) {
-            duration = 60; buffer = 30;
+            duration = 60;
         } else if (typeSelect.includes('แบบละเอียด')) {
-            duration = 120; buffer = 40;
+            duration = 120;
         }
         let totalBlock = duration + buffer;
 
         let hasAvailableDate = false;
 
         configData.forEach(day => {
-            // จำกัดแบบละเอียด 2 คิวต่อวัน (เช็ค b.type เพื่อป้องกัน Error)
             if (typeSelect.includes('แบบละเอียด')) {
                 const type3BookedCount = bookedData.filter(b => 
                     b.date === day.date && b.type && b.type.includes('แบบละเอียด')
@@ -180,7 +179,8 @@
                 for (let b of bookedData) {
                     if (b.date === day.date) {
                         let bStart = timeToMins(b.startTime);
-                        let bEnd = timeToMins(b.endTime);
+                        // ระบบอ่านเวลาจบจากชีท (เช่น 10:30) แล้วบวก 30 นาทีในใจ เพื่อตั้งเป็นกำแพงเวลาพัก
+                        let bEnd = timeToMins(b.endTime) + 30; 
                         if (t < bEnd && blockEndMins > bStart) {
                             isBooked = true; break;
                         }
@@ -222,11 +222,12 @@
 
         slotsDiv.innerHTML = '';
         
-        let duration = 0; let buffer = 0;
+        // ปรับเวลาพักเป็น 30 นาที เท่ากันทุกรูปแบบ
+        let duration = 0; let buffer = 30;
         if (typeSelect.includes('แบบระยะสั้น') || typeSelect.includes('แบบประจำปี')) {
-            duration = 60; buffer = 30;
+            duration = 60;
         } else if (typeSelect.includes('แบบละเอียด')) {
-            duration = 120; buffer = 40;
+            duration = 120;
         }
         let totalBlock = duration + buffer;
 
@@ -238,14 +239,15 @@
 
         for (let t = startMins; (t + duration) <= endMins; t += totalBlock) {
             let slotStartStr = minsToTime(t);
-            let slotEndStr = minsToTime(t + duration);
-            let blockEndMins = t + totalBlock;
+            let slotEndStr = minsToTime(t + duration); // เวลาสิ้นสุดจริงๆ ที่ใช้ดูดวง
+            let blockEndMins = t + totalBlock; // เวลาสิ้นสุดรวมพัก (เพื่อใช้ล็อกคิวหน้าเว็บ)
 
             let isBooked = false;
             for (let b of bookedData) {
                 if (b.date === dateSelect) {
                     let bStart = timeToMins(b.startTime);
-                    let bEnd = timeToMins(b.endTime);
+                    // บวกพัก 30 นาทีต่อท้ายเวลาที่ดึงมาจาก Sheet เพื่อกันคิวชน
+                    let bEnd = timeToMins(b.endTime) + 30; 
                     if (t < bEnd && blockEndMins > bStart) {
                         isBooked = true; break;
                     }
@@ -266,7 +268,8 @@
                     document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('slot-selected'));
                     btn.classList.add('slot-selected');
                     document.getElementById('selectedStartTime').value = slotStartStr;
-                    document.getElementById('selectedEndTime').value = minsToTime(blockEndMins);
+                    // จุดสำคัญ: เก็บเฉพาะเวลาจบ (เช่น 10:30) ไปบันทึก ไม่รวม 30 นาทีพัก
+                    document.getElementById('selectedEndTime').value = slotEndStr; 
                 };
             }
             slotsDiv.appendChild(btn);
@@ -300,7 +303,7 @@
                 type: document.getElementById('type').value,
                 date: document.getElementById('dateSelect').value,
                 startTime: document.getElementById('selectedStartTime').value,
-                endTime: document.getElementById('selectedEndTime').value,
+                endTime: document.getElementById('selectedEndTime').value, // ส่งไปบันทึกเฉพาะเวลาดูดวง
                 base64: event.target.result,
                 fileName: file.name
             };
