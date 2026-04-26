@@ -166,7 +166,7 @@
             // กฎข้อที่ 1: จำกัดแบบละเอียด 2 คิวต่อวัน
             if (typeSelect.includes('แบบละเอียด')) {
                 const type3BookedCount = bookedData.filter(b => 
-                    b.date === day.date && b.type.includes('แบบละเอียด')
+                    b.date === day.date && b.type && b.type.includes('แบบละเอียด')
                 ).length;
                 if (type3BookedCount >= 2) return; // ถ้าครบ 2 คิวแล้ว ข้ามวันนี้ไปเลย
             }
