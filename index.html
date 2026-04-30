@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
+    <title>.จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; background-color: #f3f4f6; padding: 20px; color: #333; }
@@ -13,12 +13,18 @@
         label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 16px; }
         input, select { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 16px; font-family: 'Sarabun', sans-serif; }
         
+        /* กล่องไฮไลท์ราคาเด้งขึ้นมา */
+        #priceHighlight { display: none; margin-top: 10px; padding: 12px; border-radius: 8px; background-color: #fffbeb; border-left: 5px solid #f59e0b; font-size: 16px; font-weight: bold; color: #1f2937; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
         .slots-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-        .slot-btn { flex: 1 1 calc(50% - 10px); padding: 10px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; font-family: 'Sarabun', sans-serif; transition: 0.2s; }
-        .slot-available { background-color: #22c55e; color: white; cursor: pointer; }
+        .slot-btn { flex: 1 1 calc(50% - 10px); padding: 10px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; font-family: 'Sarabun', sans-serif; transition: all 0.2s; }
+        
+        /* สีปุ่ม 3 สถานะ */
+        .slot-available { background-color: #22c55e; color: white; cursor: pointer; } /* สีเขียว: ว่าง */
         .slot-available:hover { background-color: #16a34a; }
-        .slot-booked { background-color: #ef4444; color: white; cursor: not-allowed; }
-        .slot-selected { background-color: #2563eb; color: white; box-shadow: 0 0 0 3px #bfdbfe; }
+        .slot-booked { background-color: #ef4444; color: white; cursor: not-allowed; } /* สีแดง: จองแล้ว */
+        .slot-selected { background-color: #2563eb !important; color: white !important; box-shadow: 0 0 0 4px #bfdbfe !important; transform: scale(1.03); } /* สีน้ำเงิน: กำลังเลือก */
 
         .qr-section { text-align: center; margin: 20px 0; padding: 15px; background: #f9fafb; border-radius: 8px; border: 1px dashed #cbd5e1; }
         .qr-section img { max-width: 200px; border-radius: 8px; margin-bottom: 10px; }
@@ -44,10 +50,11 @@
             <label>รูปแบบการดู:</label>
             <select id="type" onchange="handleTypeChange()" required>
                 <option value="" disabled selected>-- เลือกรูปแบบ --</option>
-                <option value="แบบระยะสั้น 12 ใบ (699 บาท)">ระยะสั้น 12ใบ(60นาที:699บาท)</option>
-                <option value="แบบประจำปี (1,099 บาท)">ประจำปี(60นาที:1,099บาท)</option>
-                <option value="แบบละเอียด (1,999 บาท)">ละเอียด-กราฟชีวิต(120 นาที:1,999บาท)</option>
+                <option value="แบบระยะสั้น 12 ใบ (699 บาท)">ระยะสั้น 12ใบ (1ชม.:699บาท)</option>
+                <option value="แบบประจำปี (1,099 บาท)">ประจำปี (1ชม.:1,099บาท)</option>
+                <option value="แบบละเอียด (1,999 บาท)">ละเอียด-กราฟชีวิต(2ชม.:1,999บาท)</option>
             </select>
+            <div id="priceHighlight"></div>
         </div>
 
         <div class="form-group">
@@ -83,6 +90,7 @@
 </div>
 
 <script>
+    // *** อย่าลืมวาง URL ของ App Script ตรงนี้ ***
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoBDD-kQ9T_oJKEtdvk7hSiFlJ569GLev4f7_EejXtUYWspdPPyUcdA8zGJdYH7BHA/exec"; 
     
     let configData = [];
@@ -130,7 +138,22 @@
         const typeSelect = document.getElementById('type').value;
         const dateSelect = document.getElementById('dateSelect');
         const slotsDiv = document.getElementById('slotsContainer');
+        const priceHighlight = document.getElementById('priceHighlight');
         
+        // แสดงกล่องเน้นราคาตามรูปแบบที่เลือก
+        if (typeSelect.includes('699')) {
+            priceHighlight.innerHTML = `ยอดชำระ: <span style="color: #dc2626; font-size: 18px;">699 บาท</span>`;
+            priceHighlight.style.display = 'block';
+        } else if (typeSelect.includes('1,099')) {
+            priceHighlight.innerHTML = `ยอดชำระ: <span style="color: #ea580c; font-size: 18px;">1,099 บาท</span>`;
+            priceHighlight.style.display = 'block';
+        } else if (typeSelect.includes('1,999')) {
+            priceHighlight.innerHTML = `ยอดชำระ: <span style="color: #7c3aed; font-size: 18px;">1,999 บาท</span>`;
+            priceHighlight.style.display = 'block';
+        } else {
+            priceHighlight.style.display = 'none';
+        }
+
         slotsDiv.innerHTML = '<div class="loading">กรุณาเลือกรูปแบบและวันที่เพื่อดูเวลาว่าง</div>';
         document.getElementById('selectedStartTime').value = "";
         document.getElementById('selectedEndTime').value = "";
@@ -150,14 +173,12 @@
             let buffer = 30;
             
             let possibleStartTimes = [];
-            // ถ้าเป็นแบบละเอียด ให้ใช้ Fixed Slots (9:30 และ 13:30)
             if (typeSelect.includes('แบบละเอียด')) {
                 const type3BookedCount = bookedData.filter(b => b.date === day.date && b.type && b.type.includes('แบบละเอียด')).length;
                 if (type3BookedCount < 2) {
-                    possibleStartTimes = [570, 810]; // 9:30 และ 13:30
+                    possibleStartTimes = [570, 810];
                 }
             } else {
-                // ถ้าเป็นแบบ 1-2 ให้ใช้ Sequential Slots
                 for (let t = startMins; (t + duration) <= endMins; t += (duration + buffer)) {
                     possibleStartTimes.push(t);
                 }
@@ -248,7 +269,9 @@
                 btn.className = 'slot-btn slot-available';
                 btn.innerText = `${slotStartStr} - ${slotEndStr}`;
                 btn.onclick = function() {
+                    // ลบ class สีน้ำเงินออกจากทุกปุ่มก่อน
                     document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('slot-selected'));
+                    // เพิ่ม class สีน้ำเงินให้ปุ่มนี้ปุ่มเดียว
                     btn.classList.add('slot-selected');
                     document.getElementById('selectedStartTime').value = slotStartStr;
                     document.getElementById('selectedEndTime').value = slotEndStr;
@@ -285,6 +308,7 @@
                 if(data.status === "success") {
                     alert('✅ จองคิวสำเร็จเรียบร้อยครับ');
                     document.getElementById('bookingForm').reset();
+                    document.getElementById('priceHighlight').style.display = 'none';
                     window.onload();
                 } else { alert('❌ ' + data.message); }
             }).catch(err => { btn.disabled = false; alert('เกิดข้อผิดพลาดในการส่งข้อมูลครับ'); });
