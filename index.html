@@ -1,321 +1,329 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>.จองคิวดูดวง:หมอวิทยา ธรรมนาย</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Sarabun', sans-serif; background-color: #f3f4f6; padding: 20px; color: #333; }
-        .container { max-width: 500px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: left; }
-        h2 { color: #1f2937; margin-bottom: 20px; font-size: 24px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
-        .form-group { margin-bottom: 16px; text-align: left; }
-        label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 16px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; font-size: 16px; font-family: 'Sarabun', sans-serif; }
-        
-        /* กล่องไฮไลท์ราคาเด้งขึ้นมา */
-        #priceHighlight { display: none; margin-top: 10px; padding: 12px; border-radius: 8px; background-color: #fffbeb; border-left: 5px solid #f59e0b; font-size: 16px; font-weight: bold; color: #1f2937; animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer"><meta name="theme-color" content="#173f37">
+  <meta name="description" content="เลือกวันและเวลานัดหมายกับหมอวิทยา ธรรมนาย พร้อมติดตามสถานะการจองของคุณ">
+  <title>จองคิว · หมอวิทยา ธรรมนาย</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root{--ink:#193b33;--muted:#6f7771;--paper:#f7f6f0;--line:#e1e5da;--white:#fff;--green:#204e40;--pale:#eef2e8;--gold:#a28851;--danger:#aa3535;--shadow:0 10px 35px #173f3707}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Sarabun,system-ui,sans-serif;font-size:16px;line-height:1.65}button,input,select,textarea{font:inherit}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.5}a{color:var(--green);text-underline-offset:4px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #b59755;outline-offset:3px}input,select,textarea{width:100%;border:1px solid #cdd5c9;background:#fff;color:var(--ink);border-radius:10px;padding:12px 14px;min-height:49px}input:focus,select:focus,textarea:focus{border-color:var(--green)}label{display:block;font-size:14px;font-weight:600;margin:16px 0 7px}h1,h2,h3,p{margin-top:0}h2{font-size:21px;line-height:1.4;margin-bottom:12px}h3{font-size:16px}p{margin-bottom:14px}[hidden]{display:none!important}.site-header{max-width:1180px;padding:26px 30px;display:flex;align-items:center;justify-content:space-between;margin:auto;border-bottom:1px solid var(--line)}.brand{display:flex;gap:13px;align-items:center;font-size:17px;font-weight:700;text-decoration:none}.brand small{display:block;font-size:11px;color:var(--muted);font-weight:400;letter-spacing:.3px}.brand-mark{width:43px;height:43px;border:1px solid var(--gold);color:var(--gold);border-radius:50%;display:grid;place-items:center;font-size:26px}.site-header nav{display:flex;gap:22px}.text-button{border:0;background:none;color:var(--green);padding:9px 2px;font-size:14px}.text-button:hover{text-decoration:underline;text-underline-offset:5px}.page{max-width:1120px;margin:auto;padding:0 30px 70px}.intro{display:flex;justify-content:space-between;align-items:center;padding:57px 0 42px}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:700;color:var(--gold);margin-bottom:18px}h1{font-size:46px;line-height:1.4;font-weight:500;letter-spacing:-1.4px;margin-bottom:17px}h1 span{color:#577361}.intro-copy{color:var(--muted);font-size:15px;margin:0}.intro-note{width:260px;text-align:center;color:#61705e;border-left:1px solid var(--line)}.orbit{font:normal 100px Georgia,serif;color:#b29d72;line-height:1.2}.intro-note p{margin:10px 0;font-size:14px}.tiny{font-size:11px;color:var(--muted)}.steps{display:flex;list-style:none;padding:20px 0;border-block:1px solid var(--line);margin:0 0 30px;gap:32px;font-size:13px;color:var(--muted)}.steps li{display:flex;gap:9px;align-items:center}.steps span{font-size:11px;color:var(--gold)}.steps .current{color:var(--ink);font-weight:700}.booking-layout{display:grid;grid-template-columns:minmax(0,1fr) 305px;gap:28px;align-items:start}.panel{background:var(--white);padding:27px;border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);margin-bottom:20px}.section-title{display:flex;align-items:flex-start;gap:13px;margin-bottom:24px}.section-number{font-size:11px;color:var(--gold);border:1px solid #e7e0d0;border-radius:50%;width:31px;height:31px;display:grid;place-items:center;flex-shrink:0}.section-title h2{margin:0 0 3px;font-size:19px}.section-title p{font-size:12px;color:var(--muted);margin:0}.services{padding:0;border:0;margin:0;display:grid;gap:10px}.service{position:relative;margin:0;border:1px solid var(--line);padding:16px;border-radius:11px;display:flex;gap:12px;align-items:center;cursor:pointer;transition:.15s}.service:hover{border-color:#8d9e86;background:#fcfdf9}.service:has(input:checked){background:#f2f5ed;border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}.service input{width:17px;min-height:17px;height:17px;margin:0;accent-color:var(--green);flex-shrink:0}.service-info{flex:1}.service strong{display:block;font-size:16px;font-weight:600}.service small{font-size:12px;color:var(--muted);font-weight:400}.service-price{white-space:nowrap;text-align:right;font-size:18px;font-weight:600}.service-price small{display:block;font-size:11px}.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:18px 0 6px}.slot{padding:11px 6px;background:#f8faf5;color:var(--green);border:1px solid #d7dfce;border-radius:9px;font-size:13px;min-height:48px}.slot[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}.empty{color:var(--muted);font-size:14px;grid-column:1/-1;margin:8px 0}.small{font-size:12px}.form-row{display:grid;grid-template-columns:1fr 1.4fr;gap:14px}.required{color:var(--gold)}.check{display:flex;gap:10px;align-items:flex-start;font-size:12px;font-weight:400;line-height:1.8;margin:22px 0}.check input{width:17px;height:17px;min-height:17px;margin-top:4px;accent-color:var(--green);flex-shrink:0}.primary,.secondary,.danger-button{border:0;border-radius:10px;padding:13px 20px;min-height:49px;font-weight:600;display:inline-flex;gap:18px;align-items:center;justify-content:center;text-decoration:none}.primary{background:var(--green);color:#fff}.primary:hover{background:#173b30}.secondary{border:1px solid #cdd5c9;color:var(--green);background:#fff}.danger-button{border:1px solid #debaba;color:var(--danger);background:#fff}.wide{width:100%}.hint{font-size:12px;color:var(--muted);margin:10px 0;line-height:1.8}.centered{text-align:center}.summary-column{position:sticky;top:20px}.summary{background:#eff2e8;padding:26px}.summary h2{font-size:20px;margin-bottom:24px}.summary .eyebrow{font-size:9px;margin-bottom:8px}.summary-service{font-size:17px;font-weight:600}.summary-datetime{color:#52614f;font-size:14px}.total{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 0;font-size:13px}.total strong{font-size:28px;font-weight:500}.total small{font-size:12px}.divider{height:1px;background:#d9dfcf;margin:23px 0 16px}.mini-note{display:flex;gap:13px;align-items:center;border-top:1px solid #d9dfcf;margin-top:18px;padding-top:18px;font-size:14px}.mini-note>span{font-size:27px;color:#8b976f}.mini-note p{font-size:12px;margin:0}.mini-note p>span{font-size:11px;color:var(--muted)}.policy{padding:8px 10px}.policy h3{font-size:13px;margin-bottom:10px}.policy p{font-size:12px;color:var(--muted);white-space:pre-line}.message{padding:16px 20px;background:#f3ebd6;border:1px solid #e2d1a9;border-radius:11px;font-size:14px;margin-bottom:22px;white-space:pre-line}.message.error{background:#fff1ee;color:#923b31;border-color:#e4bfb9}.message.success{background:#edf6ed;border-color:#bdd4b9}.inline-error{color:var(--danger);font-size:13px}.environment{background:#f1e7cb;color:#635126;text-align:center;font-size:12px;padding:9px 20px}.environment a{margin-left:12px}.narrow{max-width:650px;margin:20px auto}.payment-layout{display:grid;grid-template-columns:minmax(0,1fr) 305px;gap:26px;max-width:900px;margin:auto}.payment-title{max-width:900px;margin:20px auto 25px}.payment-title h2{font-size:30px}.countdown{display:flex;align-items:center;justify-content:space-between;background:#eff2e8;border:1px solid #d4deca;border-radius:12px;padding:15px 20px;margin:18px 0}.countdown strong{font-size:26px;font-variant-numeric:tabular-nums}.countdown.urgent{background:#fff0e9;color:#9c3a23}.qr{text-align:center;margin:20px 0}.qr img{max-width:235px;width:100%;border:1px solid var(--line);padding:8px;border-radius:10px}.upload-zone{display:block;padding:19px;border:1px dashed #a5b29b;border-radius:11px;background:#fafbf7}.upload-zone input{padding:8px;background:transparent;border:0;font-size:12px}.slip-preview{display:block;max-height:200px;max-width:100%;margin:14px auto;border-radius:7px}.manage-code{font-family:ui-monospace,monospace;letter-spacing:1px;font-size:19px;font-weight:600;word-break:break-all}.badge{display:inline-block;background:#eaf1e6;color:#355138;border-radius:30px;padding:5px 12px;font-size:12px}.badge.wait{background:#fbefd4;color:#7b5e25}.badge.bad{background:#f7e8e4;color:#923b31}.detail-list{margin:23px 0}.detail-list div{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid #eef0e8;padding:10px 0;font-size:14px}.detail-list dt{color:var(--muted)}.detail-list dd{margin:0;text-align:right}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.actions>*{flex:1}.link-box{background:#f6f8f2;padding:18px;border:1px solid var(--line);border-radius:11px;margin-top:22px}.link-box input{font-size:12px}.request-box{margin-top:25px;border-top:1px solid var(--line);padding-top:20px}.request-box .slots{grid-template-columns:repeat(3,1fr)}.skip{position:absolute;top:-90px;padding:12px;background:#fff;z-index:20}.skip:focus{top:0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}footer{border-top:1px solid var(--line);max-width:1120px;margin:auto;padding:24px 30px 35px;display:flex;justify-content:space-between;color:var(--muted);font-size:11px}footer span:first-child{color:var(--ink)}
+@media(max-width:850px){.booking-layout{grid-template-columns:1fr 265px;gap:18px}.panel{padding:21px}.slots{grid-template-columns:repeat(2,1fr)}h1{font-size:39px}.intro-note{width:205px}.payment-layout{grid-template-columns:1fr 260px}}@media(max-width:650px){.site-header{padding:18px 19px}.brand{font-size:14px;gap:9px}.brand small{font-size:9px}.brand-mark{width:34px;height:34px;font-size:22px}.site-header nav{gap:11px}.site-header nav button{font-size:11px}.site-header nav button:first-child{display:none}.page{padding:0 18px 35px}.intro{padding:36px 0 30px;align-items:flex-end}.intro h1{font-size:31px;letter-spacing:-.7px}.intro-copy{font-size:12px}.intro-note{width:90px;border:0;margin-left:8px}.orbit{font-size:65px}.intro-note p{font-size:10px;margin:2px 0}.intro-note .tiny{display:none}.eyebrow{font-size:8px;letter-spacing:1.5px;margin-bottom:13px}.steps{gap:14px;justify-content:space-between;padding:15px 0;margin-bottom:20px;font-size:10px}.steps li{gap:5px}.steps span{font-size:9px}.booking-layout,.payment-layout{display:flex;flex-direction:column;gap:0}.booking-layout>div,.summary-column,.payment-layout>section,.payment-layout>aside{width:100%}.summary-column{position:static}.summary-column .summary{display:none}.panel{padding:22px 19px;border-radius:13px;margin-bottom:15px}.section-title{gap:10px;margin-bottom:19px}.section-title h2{font-size:17px}.section-title p{font-size:11px}.service{padding:13px 11px;gap:9px}.service strong{font-size:14px}.service small{font-size:11px}.service-price{font-size:17px}.slots{grid-template-columns:repeat(3,1fr)}.slot{font-size:11px}.form-row{grid-template-columns:1fr}.form-row>div+div label{margin-top:3px}.policy{padding:16px 5px}.payment-title h2{font-size:25px}.payment-layout aside .summary{display:block}.actions{flex-direction:column}.actions>*{flex:auto}.detail-list div{font-size:13px}footer{padding:20px;gap:15px;font-size:10px}footer span:last-child{max-width:130px;text-align:right}.environment{font-size:11px}.environment a{display:inline-block}.payment-title{margin-top:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
-        .slots-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-        .slot-btn { flex: 1 1 calc(50% - 10px); padding: 10px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; font-family: 'Sarabun', sans-serif; transition: all 0.2s; }
-        
-        /* สีปุ่ม 3 สถานะ */
-        .slot-available { background-color: #22c55e; color: white; cursor: pointer; } /* สีเขียว: ว่าง */
-        .slot-available:hover { background-color: #16a34a; }
-        .slot-booked { background-color: #ef4444; color: white; cursor: not-allowed; } /* สีแดง: จองแล้ว */
-        .slot-selected { background-color: #2563eb !important; color: white !important; box-shadow: 0 0 0 4px #bfdbfe !important; transform: scale(1.03); } /* สีน้ำเงิน: กำลังเลือก */
-
-        .qr-section { text-align: center; margin: 20px 0; padding: 15px; background: #f9fafb; border-radius: 8px; border: 1px dashed #cbd5e1; }
-        .qr-section img { max-width: 200px; border-radius: 8px; margin-bottom: 10px; }
-        button[type="submit"] { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; font-family: 'Sarabun', sans-serif; }
-        button[type="submit"]:hover { background: #1d4ed8; }
-        button[type="submit"]:disabled { background: #9ca3af; cursor: not-allowed; }
-        #statusMessage { margin-top: 15px; font-weight: bold; text-align: center; font-size: 16px; }
-        .loading { font-size: 14px; color: #6b7280; margin-top: 5px; }
-    </style>
+</style>
+  
 </head>
 <body>
-
-<div class="container">
-    <h2>ลงคิวเปิดชะตา</h2>
-    
-    <form id="bookingForm">
-        <div class="form-group">
-            <label>ชื่อเจ้าชะตา:</label>
-            <input type="text" id="name" placeholder="กรอกชื่อ-นามสกุล หรือ ชื่อเล่น" required>
-        </div>
-
-        <div class="form-group">
-            <label>รูปแบบการดู:</label>
-            <select id="type" onchange="handleTypeChange()" required>
-                <option value="" disabled selected>-- เลือกรูปแบบ --</option>
-                <option value="แบบระยะสั้น 12 ใบ (699 บาท)">ระยะสั้น 12ใบ (1ชม.)</option>
-                <option value="แบบประจำปี (1,099 บาท)">ประจำปี (1ชม.)</option>
-                <option value="แบบละเอียด (1,999 บาท)">ละเอียด-กราฟชีวิต(2ชม.)</option>
-            </select>
-            <div id="priceHighlight"></div>
-        </div>
-
-        <div class="form-group">
-            <label>วันที่ต้องการจอง:</label>
-            <select id="dateSelect" onchange="renderSlots()" required disabled>
-                <option value="" disabled selected>-- กรุณาเลือกรูปแบบไพ่ด้านบนก่อน --</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>เลือกเวลา:</label>
-            <div id="slotsContainer" class="slots-container">
-                <div class="loading">กรุณาเลือกรูปแบบและวันที่เพื่อดูเวลาว่าง</div>
-            </div>
-            <input type="hidden" id="selectedStartTime" required>
-            <input type="hidden" id="selectedEndTime">
-        </div>
-
-        <div class="qr-section">
-            <p style="font-size: 16px; font-weight: bold; margin-top:0;">กรุณาสแกน QR Code เพื่อชำระค่าครู</p>
-            <img src="qr_wt_pmy.jpg" alt="QR Code" onerror="this.style.display='none'">
-            
-            <div class="form-group" style="margin-top: 15px; text-align: left;">
-                <label>แนบสลิปโอนเงิน (บังคับ):</label>
-                <input type="file" id="slip" accept="image/*" required>
-            </div>
-        </div>
-
-        <button type="submit" id="submitBtn">ยืนยันการจองคิว</button>
-    </form>
-    
-    <div id="statusMessage"></div>
-</div>
-
+  <a class="skip" href="#main">ข้ามไปยังการจอง</a>
+  <header class="site-header"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">✦</span><span id="brandName">หมอวิทยา ธรรมนาย<small>พื้นที่สำหรับนัดหมายของคุณ</small></span></a><nav aria-label="เมนูหลัก"><button class="text-button" id="newBooking">จองคิว</button><button class="text-button" id="openLookup">ติดตามการจอง ↗</button></nav></header>
+  <div id="environment" class="environment" hidden></div>
+  <main id="main" class="page">
+    <section class="intro"><div><p class="eyebrow">A MOMENT FOR YOURSELF</p><h1>ให้เวลาตัวเอง<br><span>มองเส้นทางข้างหน้า</span></h1><p class="intro-copy">เลือกรูปแบบการดูและเวลาที่สะดวก<br>เราจะพักคิวให้คุณก่อนชำระเงิน</p></div><div class="intro-note"><span class="orbit" aria-hidden="true">✧</span><p>ทุกนัดหมาย<br>มีเวลาให้คุณอย่างเต็มที่</p><span class="tiny">เวลาในประเทศไทย · GMT+7</span></div></section>
+    <div id="globalMessage" class="message" role="status" aria-live="polite" hidden></div>
+    <section id="bookingView">
+      <ol class="steps" aria-label="ขั้นตอนการจอง"><li class="current"><span>01</span> เลือกนัดหมาย</li><li><span>02</span> ข้อมูลของคุณ</li><li><span>03</span> ชำระเงินและส่งสลิป</li></ol>
+      <div class="booking-layout"><div>
+        <section class="panel"><div class="section-title"><span class="section-number">01</span><div><h2>เลือกรูปแบบการดู</h2><p>เลือกช่วงเวลาที่เหมาะกับเรื่องราวของคุณ</p></div></div><fieldset id="services" class="services"><legend class="sr-only">รูปแบบการดู</legend></fieldset></section>
+        <section class="panel"><div class="section-title"><span class="section-number">02</span><div><h2>เลือกวันและเวลา</h2><p>แต่ละคิวเว้นช่วงพักก่อนนัดถัดไป</p></div></div><label for="bookingDate">วันที่สะดวก</label><select id="bookingDate" disabled><option>กำลังโหลดวันว่าง…</option></select><div id="slots" class="slots" aria-label="เวลาว่าง"><p class="empty">เลือกรูปแบบการดูก่อน เพื่อดูวันว่าง</p></div><button id="refreshAvailability" class="text-button small" type="button">↻ อัปเดตวันว่าง</button></section>
+        <section class="panel"><div class="section-title"><span class="section-number">03</span><div><h2>ข้อมูลสำหรับนัดหมาย</h2><p>ใช้ติดต่อเรื่องคิวของคุณเท่านั้น</p></div></div>
+          <form id="detailsForm"><label for="customerName">ชื่อที่ใช้จอง <span class="required">*</span></label><input id="customerName" name="name" autocomplete="name" required minlength="2" maxlength="100" placeholder="ชื่อจริง หรือชื่อเล่น">
+          <div class="form-row"><div><label for="contactChannel">ช่องทางติดต่อ <span class="required">*</span></label><select id="contactChannel"><option value="phone">เบอร์โทรศัพท์</option><option value="line">LINE ID</option></select></div><div><label for="contactValue" id="contactLabel">เบอร์โทรศัพท์ <span class="required">*</span></label><input id="contactValue" name="tel" type="tel" autocomplete="tel" maxlength="50" required placeholder="เช่น 0812345678"></div></div>
+          <label class="check"><input id="consent" type="checkbox" required><span>ยอมรับเงื่อนไขด้านล่าง และยินยอมให้ใช้ชื่อ ข้อมูลติดต่อ และสลิปเพื่อจัดการนัดหมายและตรวจสอบการชำระเงิน</span></label>
+          <p id="detailsError" class="inline-error" role="alert"></p><button id="holdButton" class="primary wide" type="submit" disabled>พักคิวและไปชำระเงิน <span aria-hidden="true">→</span></button><p class="hint centered">ยังไม่ต้องโอนเงินในขั้นตอนนี้</p></form>
+        </section>
+      </div><aside class="summary-column"><section class="summary panel"><p class="eyebrow">YOUR APPOINTMENT</p><h2>นัดหมายของคุณ</h2><div id="selectionSummary"><p class="empty">เริ่มจากเลือกรูปแบบการดู</p></div><div class="divider"></div><p class="hint">ระบบจะตรวจเวลาว่างอีกครั้งก่อนพักคิว</p><div class="mini-note"><span aria-hidden="true">◷</span><p>พักคิว <strong id="holdDuration">15</strong> นาที<br><span>เพื่อให้คุณมีเวลาชำระเงินและส่งสลิป</span></p></div></section><section class="policy"><h3>ก่อนยืนยันนัดหมาย</h3><p id="policyText">หลังส่งสลิป กรุณารอตรวจสอบก่อนยืนยันนัดหมาย คำขอเลื่อนหรือยกเลิกต้องได้รับการอนุมัติจากผู้ให้บริการ</p><p id="contactText"></p></section></aside></div>
+    </section>
+    <section id="paymentView" hidden tabindex="-1"></section>
+    <section id="manageView" hidden tabindex="-1"></section>
+    <section id="lookupView" class="panel narrow" hidden tabindex="-1"><p class="eyebrow">YOUR BOOKING</p><h2>ติดตามการจอง</h2><p>วางลิงก์จัดการการจองที่ได้รับหลังพักคิว</p><form id="lookupForm"><label for="manageLinkInput">ลิงก์จัดการการจอง</label><input id="manageLinkInput" type="text" required placeholder="วางลิงก์ที่นี่" autocomplete="off"><button class="primary wide" type="submit">ดูรายการจอง</button><p class="hint">หากลิงก์หาย กรุณาติดต่อผู้ให้บริการ พร้อมชื่อและวันที่นัดหมาย</p></form></section>
+  </main>
+  <footer><span>✦ หมอวิทยา ธรรมนาย</span><span>นัดหมายอย่างสบายใจ ในเวลาของคุณ</span></footer>
+  <noscript><p class="message">กรุณาเปิด JavaScript เพื่อใช้ระบบจองคิว</p></noscript>
 <script>
-    // *** อย่าลืมวาง URL ของ App Script ตรงนี้ ***
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxoBDD-kQ9T_oJKEtdvk7hSiFlJ569GLev4f7_EejXtUYWspdPPyUcdA8zGJdYH7BHA/exec"; 
-    
-    let configData = [];
-    let bookedData = [];
+/* V2 public configuration verified on 2026-11-04. Never put credentials here. */
+window.BOOKING_CONFIG = {
+  apiUrl: 'https://script.google.com/macros/s/AKfycbz7_mbu9Cf6ffYBIb7qI5pxiBaAXiMTQp9wFeYdOftukk9vPmxoe_pAazQZIVq7h2pm/exec',
+  qrImage: 'qr_wt_pmy.jpg',
+  businessName: 'หมอวิทยา ธรรมนาย'
+};
 
-    function formatThaiDate(dateStr) {
-        if (!dateStr) return '';
-        let parts = dateStr.split('/');
-        if (parts.length !== 3) return dateStr;
-        let day = parseInt(parts[0], 10);
-        let month = parseInt(parts[1], 10) - 1;
-        let year = parseInt(parts[2], 10);
-        let beYear = year < 2500 ? year + 543 : year; 
-        let ceYear = year > 2500 ? year - 543 : year;
-        let dateObj = new Date(ceYear, month, day);
-        let thaiDays = ["วันอาทิตย์", "วันจันทร์", "วันอังคาร", "วันพุธ", "วันพฤหัสบดี", "วันศุกร์", "วันเสาร์"];
-        let thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-        return `${thaiDays[dateObj.getDay()]} ที่ ${day} ${thaiMonths[month]} ${beYear}`;
-    }
-
-    window.onload = function() {
-        fetch(WEB_APP_URL)
-            .then(res => res.json())
-            .then(data => {
-                configData = data.availableDays;
-                bookedData = data.bookedSlots;
-                document.getElementById('dateSelect').innerHTML = `<option value="" disabled selected>-- กรุณาเลือกรูปแบบไพ่ด้านบนก่อน --</option>`;
-            }).catch(err => {
-                document.getElementById('dateSelect').innerHTML = `<option value="">โหลดข้อมูลไม่สำเร็จ กรุณารีเฟรช</option>`;
-            });
-    };
-
-    function timeToMins(timeStr) {
-        let parts = timeStr.split(':');
-        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
-    }
-
-    function minsToTime(mins) {
-        let h = Math.floor(mins / 60).toString().padStart(2, '0');
-        let m = (mins % 60).toString().padStart(2, '0');
-        return `${h}:${m}`;
-    }
-
-    function handleTypeChange() {
-        const typeSelect = document.getElementById('type').value;
-        const dateSelect = document.getElementById('dateSelect');
-        const slotsDiv = document.getElementById('slotsContainer');
-        const priceHighlight = document.getElementById('priceHighlight');
-        
-        // แสดงกล่องเน้นราคาตามรูปแบบที่เลือก
-        if (typeSelect.includes('699')) {
-            priceHighlight.innerHTML = `ยอดชำระ: <span style="color: #dc2626; font-size: 18px;">699 บาท</span>`;
-            priceHighlight.style.display = 'block';
-        } else if (typeSelect.includes('1,099')) {
-            priceHighlight.innerHTML = `ยอดชำระ: <span style="color: #ea580c; font-size: 18px;">1,099 บาท</span>`;
-            priceHighlight.style.display = 'block';
-        } else if (typeSelect.includes('1,999')) {
-            priceHighlight.innerHTML = `ยอดชำระ: <span style="color: #7c3aed; font-size: 18px;">1,999 บาท</span>`;
-            priceHighlight.style.display = 'block';
-        } else {
-            priceHighlight.style.display = 'none';
-        }
-
-        slotsDiv.innerHTML = '<div class="loading">กรุณาเลือกรูปแบบและวันที่เพื่อดูเวลาว่าง</div>';
-        document.getElementById('selectedStartTime').value = "";
-        document.getElementById('selectedEndTime').value = "";
-
-        if (!typeSelect || configData.length === 0) {
-            dateSelect.disabled = true;
-            return;
-        }
-
-        dateSelect.innerHTML = `<option value="" disabled selected>-- เลือกวันที่ --</option>`;
-        let hasAvailableDate = false;
-
-        configData.forEach(day => {
-            let startMins = timeToMins(day.start);
-            let endMins = timeToMins(day.end);
-            let duration = typeSelect.includes('แบบละเอียด') ? 120 : 60;
-            let buffer = 30;
-            
-            let possibleStartTimes = [];
-            if (typeSelect.includes('แบบละเอียด')) {
-                const type3BookedCount = bookedData.filter(b => b.date === day.date && b.type && b.type.includes('แบบละเอียด')).length;
-                if (type3BookedCount < 2) {
-                    possibleStartTimes = [570, 810];
-                }
-            } else {
-                for (let t = startMins; (t + duration) <= endMins; t += (duration + buffer)) {
-                    possibleStartTimes.push(t);
-                }
-            }
-
-            let hasAtLeastOneFreeSlot = false;
-            possibleStartTimes.forEach(t => {
-                if (t >= startMins && (t + duration) <= endMins) {
-                    let isBooked = false;
-                    for (let b of bookedData) {
-                        if (b.date === day.date) {
-                            let bStart = timeToMins(b.startTime);
-                            let bEnd = timeToMins(b.endTime) + 30;
-                            if (t < bEnd && (t + duration + 30) > bStart) {
-                                isBooked = true; break;
-                            }
-                        }
-                    }
-                    if (!isBooked) hasAtLeastOneFreeSlot = true;
-                }
-            });
-
-            if (hasAtLeastOneFreeSlot) {
-                let option = document.createElement('option');
-                option.value = day.date;
-                option.text = formatThaiDate(day.date);
-                dateSelect.appendChild(option);
-                hasAvailableDate = true;
-            }
-        });
-
-        if (!hasAvailableDate) {
-            dateSelect.innerHTML = `<option value="" disabled selected>-- ไม่มีวันว่างสำหรับรูปแบบนี้ --</option>`;
-            dateSelect.disabled = true;
-        } else {
-            dateSelect.disabled = false;
-        }
-    }
-
-    function renderSlots() {
-        const typeSelect = document.getElementById('type').value;
-        const dateSelect = document.getElementById('dateSelect').value;
-        const slotsDiv = document.getElementById('slotsContainer');
-        
-        document.getElementById('selectedStartTime').value = "";
-        document.getElementById('selectedEndTime').value = "";
-        if (!typeSelect || !dateSelect) return;
-        slotsDiv.innerHTML = '';
-        
-        let dayConf = configData.find(d => d.date === dateSelect);
-        if(!dayConf) return;
-        let startMins = timeToMins(dayConf.start);
-        let endMins = timeToMins(dayConf.end);
-        let duration = typeSelect.includes('แบบละเอียด') ? 120 : 60;
-        
-        let possibleStartTimes = [];
-        if (typeSelect.includes('แบบละเอียด')) {
-            possibleStartTimes = [570, 810];
-        } else {
-            for (let t = startMins; (t + duration) <= endMins; t += (duration + 30)) {
-                possibleStartTimes.push(t);
-            }
-        }
-
-        possibleStartTimes.forEach(t => {
-            if (t < startMins || (t + duration) > endMins) return;
-
-            let slotStartStr = minsToTime(t);
-            let slotEndStr = minsToTime(t + duration);
-            let isBooked = false;
-            for (let b of bookedData) {
-                if (b.date === dateSelect) {
-                    let bStart = timeToMins(b.startTime);
-                    let bEnd = timeToMins(b.endTime) + 30;
-                    if (t < bEnd && (t + duration + 30) > bStart) {
-                        isBooked = true; break;
-                    }
-                }
-            }
-
-            let btn = document.createElement('button');
-            btn.type = 'button';
-            if (isBooked) {
-                btn.className = 'slot-btn slot-booked';
-                btn.innerText = `${slotStartStr} - ${slotEndStr} (จองแล้ว)`;
-                btn.disabled = true;
-            } else {
-                btn.className = 'slot-btn slot-available';
-                btn.innerText = `${slotStartStr} - ${slotEndStr}`;
-                btn.onclick = function() {
-                    // ลบ class สีน้ำเงินออกจากทุกปุ่มก่อน
-                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('slot-selected'));
-                    // เพิ่ม class สีน้ำเงินให้ปุ่มนี้ปุ่มเดียว
-                    btn.classList.add('slot-selected');
-                    document.getElementById('selectedStartTime').value = slotStartStr;
-                    document.getElementById('selectedEndTime').value = slotEndStr;
-                };
-            }
-            slotsDiv.appendChild(btn);
-        });
-    }
-
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if(!document.getElementById('selectedStartTime').value) { alert('กรุณากดเลือกเวลาที่ต้องการจองครับ'); return; }
-        const fileInput = document.getElementById('slip');
-        if (fileInput.files.length === 0) { alert('กรุณาแนบรูปสลิปโอนเงินครับ'); return; }
-        const btn = document.getElementById('submitBtn');
-        btn.disabled = true;
-        btn.innerText = "กำลังบันทึกข้อมูล...";
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const payload = {
-                name: document.getElementById('name').value,
-                type: document.getElementById('type').value,
-                date: document.getElementById('dateSelect').value,
-                startTime: document.getElementById('selectedStartTime').value,
-                endTime: document.getElementById('selectedEndTime').value,
-                base64: event.target.result,
-                fileName: fileInput.files[0].name
-            };
-            fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) })
-            .then(res => res.json())
-            .then(data => {
-                btn.disabled = false;
-                btn.innerText = "ยืนยันการจองคิว";
-                if(data.status === "success") {
-                    alert('✅ จองคิวสำเร็จเรียบร้อยครับ');
-                    document.getElementById('bookingForm').reset();
-                    document.getElementById('priceHighlight').style.display = 'none';
-                    window.onload();
-                } else { alert('❌ ' + data.message); }
-            }).catch(err => { btn.disabled = false; alert('เกิดข้อผิดพลาดในการส่งข้อมูลครับ'); });
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-    });
 </script>
+<script>
+/* Shared, dependency-free booking rules. Also copied to Apps Script by npm run build. */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.BookingCore = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  var SERVICES = [
+    { id: 'short', name: 'ระยะสั้น 12 ใบ', description: 'เปิดไพ่ 12 ใบ', price: 699, duration: 60, starts: [], dailyLimit: 0, active: true },
+    { id: 'annual', name: 'ประจำปี', description: 'มองภาพรวมของปี', price: 1099, duration: 60, starts: [], dailyLimit: 0, active: true },
+    { id: 'detailed', name: 'ละเอียด–กราฟชีวิต', description: 'อ่านแบบละเอียด พร้อมกราฟชีวิต', price: 1999, duration: 120, starts: ['09:30', '13:30'], dailyLimit: 2, active: true }
+  ];
+  function fail(message, code) { var e = new Error(message); e.code = code || 'INVALID_INPUT'; throw e; }
+  function dateKey(value) {
+    var s = String(value || '').trim(), m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s), y, mo, d;
+    if (m) { y = +m[1]; mo = +m[2]; d = +m[3]; }
+    else { m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(s); if (!m) return ''; y = +m[3]; mo = +m[2]; d = +m[1]; }
+    if (y >= 2400) y -= 543;
+    var dt = new Date(Date.UTC(y, mo - 1, d));
+    if (y < 2000 || y > 2200 || dt.getUTCFullYear() !== y || dt.getUTCMonth() !== mo - 1 || dt.getUTCDate() !== d) return '';
+    return String(y) + '-' + String(mo).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+  }
+  function minutes(value) { var m = /^(\d{1,2}):(\d{2})(?::\d{2})?$/.exec(String(value)); return m && +m[1] < 24 && +m[2] < 60 ? +m[1] * 60 + +m[2] : NaN; }
+  function time(value) { return String(Math.floor(value / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0'); }
+  function startEpoch(date, start) { return Date.parse(dateKey(date) + 'T' + time(minutes(start)) + ':00+07:00'); }
+  function today(now) { return new Date((now === undefined ? Date.now() : now) + 7 * 3600000).toISOString().slice(0, 10); }
+  function blocks(b, now) { return ['PENDING', 'CONFIRMED'].indexOf(b.status) >= 0 || b.status === 'HOLD' && +b.holdUntil > now; }
+  function overlaps(aStart, aEnd, bStart, bEnd, buffer) { return aStart < bEnd + buffer && aEnd + buffer > bStart; }
+  function slots(day, service, bookings, settings, now, excludeId) {
+    now = now === undefined ? Date.now() : now;
+    var date = dateKey(day.date), start = minutes(day.start), end = minutes(day.end), buffer = +settings.bufferMinutes;
+    if (!date || !service.active || day.active === false || !Number.isFinite(start) || !Number.isFinite(end) || start >= end) return [];
+    var occupied = bookings.filter(function (b) { return (!excludeId || b.id !== excludeId) && dateKey(b.date) === date && blocks(b, now); });
+    if (service.dailyLimit && occupied.filter(function (b) { return b.serviceId === service.id; }).length >= service.dailyLimit) return [];
+    var candidates = service.starts.length ? service.starts.map(minutes) : [];
+    if (!service.starts.length) for (var t = start; t + service.duration <= end; t += service.duration + buffer) candidates.push(t);
+    return candidates.filter(function (t) {
+      return t >= start && t + service.duration <= end && startEpoch(date, time(t)) > now + (+settings.leadMinutes || 0) * 60000 && !occupied.some(function (b) {
+        return overlaps(t, t + service.duration, minutes(b.startTime), minutes(b.endTime), buffer);
+      });
+    }).map(function (t) { return { start: time(t), end: time(t + service.duration) }; });
+  }
+  function validateService(s) {
+    if (!s || !/^[a-z][a-z0-9_-]{1,30}$/.test(s.id) || !String(s.name || '').trim() || String(s.name).length > 100) fail('ข้อมูลรูปแบบการดูไม่ถูกต้อง');
+    if (!Number.isInteger(s.duration) || s.duration < 15 || s.duration > 480 || !Number.isInteger(s.price) || s.price < 1 || s.price > 100000) fail('ราคาและระยะเวลาไม่ถูกต้อง');
+    if (!Array.isArray(s.starts) || s.starts.length > 24 || s.starts.some(function (v) { return !Number.isFinite(minutes(v)); }) || new Set(s.starts).size !== s.starts.length) fail('เวลาเริ่มต้นไม่ถูกต้อง');
+    if (!Number.isInteger(s.dailyLimit) || s.dailyLimit < 0 || s.dailyLimit > 50) fail('จำนวนคิวต่อวันไม่ถูกต้อง');
+    var starts = s.starts.map(function (v) { return time(minutes(v)); });
+    if (new Set(starts).size !== starts.length) fail('เวลาเริ่มต้นซ้ำกัน');
+    return { id: s.id, name: s.name.trim(), description: String(s.description || '').slice(0, 200), price: s.price, duration: s.duration, starts: starts, dailyLimit: s.dailyLimit, active: s.active !== false };
+  }
+  function customer(p) {
+    var name = String(p.name || '').trim(), channel = p.contactChannel, contact = String(p.contactValue || '').trim(), email = String(p.email || '').trim();
+    if (name.length < 2 || name.length > 100) fail('กรุณากรอกชื่อ 2–100 ตัวอักษร');
+    if (channel !== 'phone' && channel !== 'line') fail('กรุณาเลือกช่องทางติดต่อ');
+    if (channel === 'phone' && !/^\+?[0-9 -]{8,20}$/.test(contact) || channel === 'line' && !/^[A-Za-z0-9@._-]{2,50}$/.test(contact)) fail('กรุณาตรวจสอบเบอร์โทรหรือ LINE ID');
+    if (email && (email.length > 150 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) fail('กรุณาตรวจสอบอีเมล');
+    if (p.consent !== true) fail('กรุณายอมรับการใช้ข้อมูลเพื่อจัดการนัดหมาย');
+    return { name: name, contactChannel: channel, contactValue: contact, email: email };
+  }
+  function canRequest(b) { return ['PENDING', 'CONFIRMED'].indexOf(b.status) >= 0; }
+  function thaiDate(value) { var d = dateKey(value); return d ? new Date(d + 'T12:00:00+07:00').toLocaleDateString('th-TH', { timeZone: 'Asia/Bangkok', weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : ''; }
+  function sheetText(value) { var s = String(value || ''); return /^[=+\-@\t\r\n]/.test(s) ? "'" + s : s; }
+  return { SERVICES: SERVICES, fail: fail, dateKey: dateKey, minutes: minutes, time: time, startEpoch: startEpoch, today: today, blocks: blocks, overlaps: overlaps, slots: slots, validateService: validateService, customer: customer, canRequest: canRequest, thaiDate: thaiDate, sheetText: sheetText };
+});
 
+</script>
+<script>
+(function (root) {
+  'use strict';
+  function create(storage, now) {
+    var C = root.BookingCore || (typeof require === 'function' ? require('./core.js') : null), key = 'bookingpmy-demo-v2';
+    now = now || Date.now;
+    function read() { try { var saved = JSON.parse(storage.getItem(key)); if (saved && saved.version === 2) return saved; } catch (_) {} return { version: 2, bookings: [], settings: { businessName: 'หมอวิทยา ธรรมนาย', contactText: 'โหมดตัวอย่าง · ไม่มีการจองหรือชำระเงินจริง', bookingOpen: true, holdMinutes: 15, bufferMinutes: 30, leadMinutes: 60, policyText: 'ตัวอย่างระบบ พักคิว 15 นาที แนบสลิปแล้วรอตรวจสอบ คำขอเลื่อน–ยกเลิกให้ผู้ให้บริการพิจารณา ไม่มีการโอนหรือคืนเงินจริงในโหมดนี้', services: JSON.parse(JSON.stringify(C.SERVICES)) }, days: [1, 2, 4, 6, 8, 10].map(function (n) { return { date: C.today(now() + n * 86400000), start: '09:30', end: '18:00', active: true }; }) }; }
+    function write(data) { storage.setItem(key, JSON.stringify(data)); }
+    function state() { var d = read(); d.bookings.forEach(function (b) { if (b.status === 'HOLD' && b.holdUntil <= now()) { b.status = 'EXPIRED'; b.revision++; } }); write(d); return d; }
+    function publicBooking(b) { var out = Object.assign({}, b, { serverNow: now() }); delete out.token; return out; }
+    function bootstrap() { var d = state(); return Promise.resolve(Object.assign({ ok: true, schemaVersion: 2, serverNow: now() }, d.settings, { days: d.settings.bookingOpen ? d.days.filter(function (v) { return v.active && v.date >= C.today(now()); }).map(function (day) { var slots = {}; d.settings.services.forEach(function (s) { slots[s.id] = C.slots(day, s, d.bookings, d.settings, now()); }); return { date: day.date, slots: slots }; }) : [] })); }
+    function call(action, p) {
+      return Promise.resolve().then(function () {
+        var d = state(), b = d.bookings.find(function (v) { return action === 'hold' ? v.requestId === p.requestId : v.id === p.id; });
+        if (action === 'hold') {
+          if (!b) {
+            if (!d.settings.bookingOpen) C.fail('ยังไม่เปิดรับจอง');
+            var person = C.customer(p), s = d.settings.services.find(function (v) { return v.id === p.serviceId; }), day = d.days.find(function (v) { return v.date === p.date; });
+            var slot = day && s && C.slots(day, s, d.bookings, d.settings, now()).find(function (v) { return v.start === p.startTime; }); if (!slot) C.fail('คิวนี้ไม่ว่างแล้ว กรุณาเลือกเวลาใหม่', 'SLOT_TAKEN');
+            b = Object.assign(person, { id: 'PMY-' + Math.random().toString(16).slice(2).padEnd(12, '0').slice(0, 12).toUpperCase(), type: s.name, serviceId: s.id, price: s.price, duration: s.duration, date: day.date, startTime: slot.start, endTime: slot.end, status: 'HOLD', holdUntil: now() + d.settings.holdMinutes * 60000, token: p.token, requestId: p.requestId, revision: 1, slipReceived: false, changeType: '', refundStatus: '' }); d.bookings.push(b);
+          }
+        }
+        if (!b || b.token !== p.token) C.fail('ลิงก์จัดการการจองไม่ถูกต้อง', 'NOT_FOUND');
+        if (action === 'uploadSlip') { if (b.status === 'HOLD') { b.status = 'PENDING'; b.slipReceived = true; b.holdUntil = 0; b.revision++; } else if (b.status !== 'PENDING' && b.status !== 'CONFIRMED') C.fail('เวลาพักคิวหมดแล้ว', 'HOLD_EXPIRED'); }
+        if (action === 'release' && b.status === 'HOLD') { b.status = 'CANCELLED'; b.revision++; }
+        if (action === 'requestChange') { if (!C.canRequest(b) || b.changeType) C.fail('รายการนี้ขอเปลี่ยนแปลงไม่ได้'); b.changeType = p.kind; b.changeReason = p.reason; b.requestedDate = p.date || ''; b.requestedStartTime = p.startTime || ''; b.revision++; }
+        write(d); return { ok: true, booking: publicBooking(b) };
+      });
+    }
+    function admin(method, p) {
+      return Promise.resolve().then(function () {
+        p = p || {}; var d = state();
+        if (method === 'adminBootstrap') return { settings: d.settings, days: d.days, bookings: d.bookings.map(publicBooking), today: C.today(now()), lineReady: false, webhookReady: false, failedNotifications: 0, pendingNotifications: 0 };
+        if (method === 'adminSaveSettings') { d.settings = p; d.settings.services = p.services.map(C.validateService); }
+        else if (method === 'adminSaveDay') { var old = d.days.findIndex(function (v) { return v.date === p.date; }); if (old < 0) d.days.push(p); else d.days[old] = p; }
+        else if (method === 'adminMonthSummary') { var rows = d.bookings.filter(function (b) { return b.date.startsWith(p.year + '-' + String(p.month).padStart(2, '0')) && ['CONFIRMED', 'COMPLETED'].includes(b.status); }); return { text: 'สรุปคิวยืนยัน ' + p.month + '/' + (+p.year + 543) + '\n' + rows.length + ' คิว · ' + rows.reduce(function (a, b) { return a + b.price; }, 0) + ' บาท\nตัวอย่างข้อมูลในเบราว์เซอร์นี้เท่านั้น' }; }
+        else if (method === 'adminAction') {
+          var b = d.bookings.find(function (v) { return v.id === p.id; }); if (!b || b.revision !== +p.revision) C.fail('รายการเปลี่ยนแปลงแล้ว กรุณารีเฟรช');
+          if (p.action === 'confirm') { if (b.status !== 'PENDING' || !p.paymentVerified) C.fail('ต้องตรวจสลิปก่อน'); b.status = 'CONFIRMED'; }
+          else if (p.action === 'complete') b.status = 'COMPLETED';
+          else if (p.action === 'reject' || p.action === 'cancel') { b.status = p.action === 'reject' ? 'REJECTED' : 'CANCELLED'; if (b.slipReceived) b.refundStatus = 'REVIEW'; }
+          else if (p.action === 'refundSettled') b.refundStatus = 'SETTLED';
+          else if (p.action === 'declineChange') b.changeType = '';
+          else if (p.action === 'reschedule') {
+            var service = Object.assign({}, d.settings.services.find(function (v) { return v.id === b.serviceId; }), { duration: b.duration }), nextDay = d.days.find(function (v) { return v.date === p.date; });
+            var free = nextDay && C.slots(nextDay, service, d.bookings, d.settings, now(), b.id).find(function (v) { return v.start === p.startTime; }); if (!free) C.fail('คิวใหม่ไม่ว่าง'); b.date = p.date; b.startTime = free.start; b.endTime = free.end;
+          }
+          else if (p.action === 'approveChange') {
+            if (b.changeType === 'cancel') { b.status = 'CANCELLED'; b.refundStatus = 'REVIEW'; }
+            else { var s = d.settings.services.find(function (v) { return v.id === b.serviceId; }), day = d.days.find(function (v) { return v.date === b.requestedDate; }); var slot = day && C.slots(day, s, d.bookings, d.settings, now(), b.id).find(function (v) { return v.start === b.requestedStartTime; }); if (!slot) C.fail('เวลาที่ขอเลื่อนไม่ว่างแล้ว'); b.date = b.requestedDate; b.startTime = slot.start; b.endTime = slot.end; } b.changeType = '';
+          }
+          b.adminNote = p.note || b.adminNote || ''; b.revision++;
+        }
+        write(d); return { ok: true };
+      });
+    }
+    return { bootstrap: bootstrap, call: call, admin: admin };
+  }
+  root.BookingDemo = { create: create };
+  if (typeof module === 'object') module.exports = { create: create };
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script>
+<script>
+(function () {
+  'use strict';
+  var C = BookingCore, cfg = window.BOOKING_CONFIG, demoMode = cfg.demoOnly === true || new URLSearchParams(location.search).get('demo') === '1';
+  var demo = demoMode ? BookingDemo.create(localStorage) : null;
+  var state = { data: null, service: '', date: '', start: '', credentials: null, booking: null, busy: false, clockOffset: 0, previewUrl: '', request: null, poll: 0, countdown: 0 };
+  var $ = function (id) { return document.getElementById(id); };
+  var escape = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var money = function (v) { return Number(v).toLocaleString('th-TH'); };
+  var statuses = { HOLD: 'พักคิวแล้ว · รอส่งสลิป', PENDING: 'ส่งสลิปแล้ว · รอตรวจสอบ', CONFIRMED: 'ยืนยันนัดหมายแล้ว', COMPLETED: 'นัดหมายเสร็จสิ้น', EXPIRED: 'หมดเวลาพักคิว', CANCELLED: 'ยกเลิกแล้ว', REJECTED: 'สลิปไม่ผ่านการตรวจสอบ' };
+  function msg(text, type) { $('globalMessage').textContent = text; $('globalMessage').className = 'message ' + (type || ''); $('globalMessage').hidden = !text; }
+  function show(view) { ['bookingView', 'paymentView', 'manageView', 'lookupView'].forEach(function (id) { $(id).hidden = id !== view; }); clearInterval(state.countdown); clearInterval(state.poll); if (view !== 'bookingView') $(view).focus(); }
+  async function request(method, payload) {
+    if (demo) return method === 'GET' ? demo.bootstrap() : demo.call(payload.action, payload);
+    if (!cfg.apiUrl) throw new Error('ระบบกำลังเตรียมเปิดรับจอง กรุณาติดต่อผู้ให้บริการ');
+    var controller = new AbortController(), timer = setTimeout(function () { controller.abort(); }, 45000);
+    try {
+      var options = { method: method, redirect: 'follow', signal: controller.signal, cache: 'no-store' };
+      if (method === 'POST') { options.headers = { 'Content-Type': 'text/plain;charset=utf-8' }; options.body = JSON.stringify(payload); }
+      var response = await fetch(cfg.apiUrl, options), data;
+      if (!response.ok) throw new Error('เชื่อมต่อระบบไม่สำเร็จ กรุณาลองใหม่');
+      try { data = await response.json(); } catch (_) { throw new Error('ระบบจองยังไม่พร้อมใช้งาน กรุณาติดต่อผู้ให้บริการ'); }
+      if (!data.ok) { var error = new Error(data.message || 'ไม่สามารถทำรายการได้'); error.code = data.code; throw error; }
+      return data;
+    } catch (e) { if (e.name === 'AbortError' || e instanceof TypeError) throw new Error('การเชื่อมต่อขัดข้อง กรุณาลองอีกครั้ง ระบบจะตรวจรายการเดิมก่อนบันทึกซ้ำ'); throw e; }
+    finally { clearTimeout(timer); }
+  }
+  function setClock(serverNow) { if (serverNow) state.clockOffset = serverNow - Date.now(); }
+  function serverNow() { return Date.now() + state.clockOffset; }
+  function selectedService() { return state.data && state.data.services.find(function (s) { return s.id === state.service; }); }
+  function renderServices() {
+    $('services').innerHTML = '<legend class="sr-only">รูปแบบการดู</legend>' + state.data.services.map(function (s) { return '<label class="service"><input type="radio" name="service" value="' + escape(s.id) + '" ' + (state.service === s.id ? 'checked' : '') + '><span class="service-info"><strong>' + escape(s.name) + '</strong><small>' + escape(s.description) + ' · ' + s.duration + ' นาที</small></span><span class="service-price">' + money(s.price) + '<small>บาท / ครั้ง</small></span></label>'; }).join('');
+    $('services').querySelectorAll('input').forEach(function (el) { el.addEventListener('change', function () { state.service = el.value; state.date = ''; state.start = ''; state.request = null; renderDates(); }); });
+  }
+  function renderDates() {
+    var days = state.data && state.data.days.filter(function (d) { return (d.slots[state.service] || []).length; }) || [];
+    var select = $('bookingDate'); select.replaceChildren();
+    var placeholder = !state.service ? 'เลือกรูปแบบการดูก่อน' : !state.data.bookingOpen ? 'ยังไม่เปิดรับจอง' : !days.length ? 'ยังไม่มีวันว่างสำหรับรูปแบบนี้' : 'เลือกวันที่สะดวก';
+    select.add(new Option(placeholder, '')); days.forEach(function (d) { select.add(new Option(C.thaiDate(d.date), d.date)); });
+    if (!days.some(function (d) { return d.date === state.date; })) { state.date = ''; state.start = ''; }
+    select.value = state.date; select.disabled = !state.service || !days.length || !state.data.bookingOpen; renderSlots();
+  }
+  function renderSlots() {
+    var day = state.data && state.data.days.find(function (d) { return d.date === state.date; }), slots = day && day.slots[state.service] || [];
+    if (!slots.some(function (s) { return s.start === state.start; })) state.start = '';
+    $('slots').innerHTML = slots.length ? slots.map(function (s) { return '<button class="slot" type="button" aria-pressed="' + (s.start === state.start) + '" data-start="' + s.start + '">' + s.start + ' – ' + s.end + '</button>'; }).join('') : '<p class="empty">' + (!state.service ? 'เลือกรูปแบบการดูก่อน เพื่อดูวันว่าง' : !state.date ? 'เลือกวันที่สะดวกเพื่อดูเวลา' : 'วันนี้ไม่มีคิวว่าง กรุณาเลือกวันอื่น') + '</p>';
+    $('slots').querySelectorAll('button').forEach(function (button) { button.addEventListener('click', function () { state.start = button.dataset.start; state.request = null; renderSlots(); }); }); renderSummary();
+  }
+  function appointmentHTML(service, date, start, end, price) { return '<p class="summary-service">' + escape(service) + '</p><p class="summary-datetime">' + escape(date ? C.thaiDate(date) : 'ยังไม่ได้เลือกวัน') + '<br>' + escape(start ? start + ' – ' + end + ' น.' : 'ยังไม่ได้เลือกเวลา') + '</p><p class="total"><span>ยอดชำระ</span><strong>' + money(price) + ' <small>บาท</small></strong></p>'; }
+  function renderSummary() {
+    var s = selectedService(); $('selectionSummary').innerHTML = s ? appointmentHTML(s.name, state.date, state.start, state.start ? C.time(C.minutes(state.start) + s.duration) : '', s.price) : '<p class="empty">เริ่มจากเลือกรูปแบบการดู</p>';
+    $('holdButton').disabled = !s || !state.date || !state.start || state.busy || !state.data.bookingOpen;
+  }
+  async function loadAvailability(quiet) {
+    $('refreshAvailability').disabled = true;
+    try {
+      var data = await request('GET'); if (data.schemaVersion !== 2) throw new Error('กำลังอัปเดตระบบจอง กรุณาติดต่อผู้ให้บริการ');
+      state.data = data; setClock(data.serverNow); $('brandName').firstChild.textContent = data.businessName; $('holdDuration').textContent = data.holdMinutes; $('policyText').textContent = data.policyText; $('contactText').textContent = data.contactText;
+      if (!quiet) msg(data.bookingOpen ? '' : 'ยังไม่เปิดรับจองในขณะนี้\n' + data.contactText);
+      renderServices(); renderDates();
+    } catch (e) { msg(e.message, 'error'); $('bookingDate').replaceChildren(new Option('โหลดวันว่างไม่สำเร็จ กรุณากดอัปเดต', '')); $('bookingDate').disabled = true; $('holdButton').disabled = true; }
+    finally { $('refreshAvailability').disabled = false; }
+  }
+  function token() { var bytes = new Uint8Array(32); crypto.getRandomValues(bytes); return Array.from(bytes, function (v) { return v.toString(16).padStart(2, '0'); }).join(''); }
+  function manageURL() { var url = new URL(location.href); url.hash = 'manage=' + state.credentials.id + '.' + state.credentials.token; return url.href; }
+  function saveCredentials() { sessionStorage.setItem('bookingpmy-current' + (demoMode ? '-demo' : ''), JSON.stringify(state.credentials)); history.replaceState(null, '', manageURL()); }
+  function linkBox() { return '<div class="link-box"><strong>เก็บลิงก์นี้ไว้ติดตามการจอง</strong><p class="hint">ผู้มีลิงก์สามารถดูและขอเปลี่ยนแปลงรายการนี้ได้ กรุณาเก็บเป็นส่วนตัว</p><input id="privateLink" readonly aria-label="ลิงก์จัดการการจอง" value="' + escape(manageURL()) + '"><div class="actions"><button class="secondary" id="copyLink">คัดลอกลิงก์</button><button class="secondary" id="downloadReceipt">บันทึกรายละเอียด</button></div></div>'; }
+  function wireLinks() {
+    $('copyLink').onclick = async function () { try { await navigator.clipboard.writeText(manageURL()); $('copyLink').textContent = 'คัดลอกแล้ว'; } catch (_) { $('privateLink').select(); msg('เลือกลิงก์ไว้แล้ว กรุณาคัดลอกและเก็บเป็นส่วนตัว'); } };
+    $('downloadReceipt').onclick = function () { var b = state.booking, text = ['นัดหมายกับ ' + (state.data ? state.data.businessName : cfg.businessName), 'รหัสจอง: ' + b.id, 'ชื่อ: ' + b.name, b.type, C.thaiDate(b.date) + ' ' + b.startTime + '–' + b.endTime, 'ยอดชำระ: ' + b.price + ' บาท', 'สถานะ ณ เวลาบันทึก: ' + statuses[b.status], 'สถานะล่าสุด: ' + manageURL(), 'เก็บลิงก์นี้เป็นส่วนตัว', demoMode ? 'ตัวอย่างเท่านั้น ไม่ใช่การจองจริง' : ''].join('\n'); var blobURL = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' })); var a = document.createElement('a'); a.href = blobURL; a.download = b.id + '.txt'; a.click(); setTimeout(function () { URL.revokeObjectURL(blobURL); }, 1000); };
+  }
+  async function hold(event) {
+    event.preventDefault(); if (state.busy) return; $('detailsError').textContent = '';
+    try {
+      var p = { name: $('customerName').value, contactChannel: $('contactChannel').value, contactValue: $('contactValue').value, consent: $('consent').checked, serviceId: state.service, date: state.date, startTime: state.start };
+      C.customer(p); if (!p.startTime) throw new Error('กรุณาเลือกวันและเวลา');
+      var fingerprint = JSON.stringify(p);
+      if (!state.request || state.request.fingerprint !== fingerprint) state.request = { fingerprint: fingerprint, token: token(), requestId: crypto.randomUUID() };
+      sessionStorage.setItem('bookingpmy-pending' + (demoMode ? '-demo' : ''), JSON.stringify(Object.assign({}, p, state.request)));
+      state.busy = true; $('holdButton').textContent = 'กำลังตรวจและพักคิว…'; renderSummary();
+      var result = await request('POST', Object.assign(p, { action: 'hold', token: state.request.token, requestId: state.request.requestId }));
+      state.credentials = { id: result.booking.id, token: state.request.token }; state.booking = result.booking; setClock(result.booking.serverNow); saveCredentials(); sessionStorage.removeItem('bookingpmy-pending' + (demoMode ? '-demo' : '')); msg(''); routeBooking();
+    } catch (e) { $('detailsError').textContent = e.message; if (e.code === 'SLOT_TAKEN') { sessionStorage.removeItem('bookingpmy-pending' + (demoMode ? '-demo' : '')); state.start = ''; state.request = null; await loadAvailability(true); } }
+    finally { state.busy = false; $('holdButton').innerHTML = 'พักคิวและไปชำระเงิน <span aria-hidden="true">→</span>'; renderSummary(); }
+  }
+  function routeBooking() { if (state.booking.status === 'HOLD') renderPayment(); else renderManage(); }
+  function renderPayment() {
+    var b = state.booking; show('paymentView');
+    $('paymentView').innerHTML = '<div class="payment-title"><p class="eyebrow">YOUR TIME IS RESERVED</p><h2>พักคิวให้คุณแล้ว</h2><p class="hint">กรุณาชำระเงินและส่งสลิปภายในเวลาที่แสดง เพื่อส่งรายการให้ตรวจสอบ</p></div><div class="payment-layout"><section class="panel"><p class="manage-code">' + escape(b.id) + '</p><div id="countdownBox" class="countdown"><span>เวลาที่เหลือสำหรับส่งสลิป</span><strong id="countdown">--:--</strong></div>' + (demoMode ? '<div class="message">โหมดตัวอย่าง ไม่มีการชำระเงินจริง<br>เลือกภาพตัวอย่างเพื่อทดลองขั้นตอนส่งสลิปได้</div>' : '<div class="qr"><img src="' + escape(cfg.qrImage) + '" alt="QR สำหรับชำระค่าบริการ" id="paymentQR"><p class="hint">ตรวจชื่อผู้รับและยอด ' + money(b.price) + ' บาท ในแอปธนาคารก่อนยืนยันการโอน</p></div>') + '<form id="slipForm"><label class="upload-zone" for="slipFile">แนบสลิปโอนเงิน<input id="slipFile" type="file" accept="image/jpeg,image/png,image/webp" required><span class="hint">JPG, PNG หรือ WebP ไม่เกิน 5 MB</span></label><img class="slip-preview" id="slipPreview" alt="ตัวอย่างสลิปที่เลือก" hidden><p id="slipError" class="inline-error" role="alert"></p><button id="uploadButton" class="primary wide" type="submit">ส่งสลิปให้ตรวจสอบ</button></form>' + linkBox() + '<button class="text-button small" id="releaseHold" type="button">ยังไม่ได้โอนเงิน และต้องการคืนคิว</button><p class="hint">หากโอนแล้วแต่ส่งสลิปไม่ทัน อย่าโอนซ้ำ ให้ติดต่อผู้ให้บริการพร้อมรหัสจอง</p></section><aside><section class="summary panel"><p class="eyebrow">YOUR APPOINTMENT</p>' + appointmentHTML(b.type, b.date, b.startTime, b.endTime, b.price) + '</section><section class="policy"><h3>ติดต่อผู้ให้บริการ</h3><p>' + escape(state.data ? state.data.contactText : '') + '</p><p>สถานะพักคิวยังไม่ใช่การยืนยันนัดหมาย หลังส่งสลิปกรุณารอผู้ให้บริการตรวจสอบ</p></section></aside></div>';
+    wireLinks(); $('slipFile').onchange = previewSlip; $('slipForm').onsubmit = upload; $('releaseHold').onclick = release;
+    if (demoMode) {
+      var simulate = document.createElement('button'); simulate.type = 'button'; simulate.className = 'secondary wide'; simulate.textContent = 'ใช้สลิปตัวอย่างเพื่อทดลองขั้นตอน';
+      $('slipForm').after(simulate); simulate.onclick = async function () { if (state.busy) return; state.busy = true; simulate.disabled = true; try { var result = await demo.call('uploadSlip', Object.assign({ base64: 'demo-only' }, state.credentials)); state.booking = result.booking; routeBooking(); } catch (e) { msg(e.message, 'error'); } finally { state.busy = false; simulate.disabled = false; } };
+    }
+    if ($('paymentQR')) $('paymentQR').onerror = function () { this.hidden = true; $('uploadButton').disabled = true; $('slipError').textContent = 'ไม่สามารถแสดง QR ได้ กรุณาติดต่อผู้ให้บริการก่อนโอน'; };
+    function tick() { var remaining = b.holdUntil - serverNow(), left = Math.max(0, Math.ceil(remaining / 1000)); $('countdown').textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); $('countdownBox').classList.toggle('urgent', left < 120); if (remaining <= 0 && !state.busy) { clearInterval(state.countdown); $('uploadButton').disabled = true; lookup(true).catch(function (e) { msg(e.message, 'error'); }); } }
+    tick(); state.countdown = setInterval(tick, 1000);
+  }
+  function validateFile(file) { if (!file || !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024 || !file.size) throw new Error('กรุณาเลือกภาพ JPG, PNG หรือ WebP ขนาดไม่เกิน 5 MB'); }
+  function previewSlip() { $('slipError').textContent = ''; var file = $('slipFile').files[0]; if (state.previewUrl) URL.revokeObjectURL(state.previewUrl); $('slipPreview').hidden = true; try { validateFile(file); state.previewUrl = URL.createObjectURL(file); $('slipPreview').src = state.previewUrl; $('slipPreview').hidden = false; } catch (e) { $('slipError').textContent = e.message; $('slipFile').value = ''; } }
+  async function upload(event) {
+    event.preventDefault(); if (state.busy) return;
+    try {
+      var file = $('slipFile').files[0]; validateFile(file); state.busy = true; $('uploadButton').disabled = true; $('uploadButton').textContent = 'กำลังส่งสลิป…'; $('slipError').textContent = '';
+      var base64 = await new Promise(function (resolve, reject) { var r = new FileReader(); r.onerror = function () { reject(new Error('อ่านไฟล์ไม่สำเร็จ กรุณาเลือกไฟล์ใหม่')); }; r.onabort = r.onerror; r.onload = function () { resolve(r.result); }; r.readAsDataURL(file); });
+      var result = await request('POST', Object.assign({ action: 'uploadSlip', base64: base64 }, state.credentials)); state.booking = result.booking; setClock(result.booking.serverNow); routeBooking();
+    } catch (e) { if ($('slipError')) $('slipError').textContent = e.message; if (e.code === 'HOLD_EXPIRED') await lookup(true); }
+    finally { state.busy = false; if ($('uploadButton')) { $('uploadButton').textContent = 'ส่งสลิปให้ตรวจสอบ'; $('uploadButton').disabled = state.booking.holdUntil <= serverNow(); } }
+  }
+  async function release() { if (!confirm('ยืนยันว่าคุณยังไม่ได้โอนเงิน และต้องการคืนคิวนี้?')) return; try { var r = await request('POST', Object.assign({ action: 'release' }, state.credentials)); state.booking = r.booking; routeBooking(); } catch (e) { msg(e.message, 'error'); } }
+  function renderManage() {
+    var b = state.booking; show('manageView');
+    var terminal = ['EXPIRED', 'CANCELLED', 'REJECTED'].includes(b.status), canChange = C.canRequest(b) && C.startEpoch(b.date, b.startTime) > serverNow();
+    var explanations = { PENDING: 'ได้รับสลิปแล้ว ผู้ให้บริการจะตรวจสอบก่อนยืนยันนัดหมาย คุณกลับมาตรวจสถานะผ่านลิงก์นี้ได้', CONFIRMED: 'นัดหมายได้รับการยืนยันแล้ว พบกันตามวันและเวลาที่ระบุครับ', COMPLETED: 'ขอบคุณที่ให้เราเป็นส่วนหนึ่งของช่วงเวลาของคุณ', EXPIRED: 'หมดเวลาพักคิวแล้ว หากโอนเงินแล้ว อย่าจองหรือโอนซ้ำ ให้ติดต่อผู้ให้บริการพร้อมรหัสนี้', CANCELLED: 'รายการนี้ยกเลิกแล้ว หากเคยโอนเงิน กรุณาติดตามผลกับผู้ให้บริการ', REJECTED: 'กรุณาติดต่อผู้ให้บริการเพื่อตรวจสอบยอดโอนหรือส่งหลักฐานเพิ่มเติม' };
+    $('manageView').innerHTML = '<section class="panel narrow"><p class="eyebrow">YOUR APPOINTMENT</p><span class="badge ' + (terminal ? 'bad' : b.status === 'PENDING' ? 'wait' : '') + '">' + escape(statuses[b.status] || b.status) + '</span><h2 style="margin-top:18px">' + escape(b.name) + '</h2><p class="manage-code">' + escape(b.id) + '</p><p>' + escape(explanations[b.status] || '') + '</p><dl class="detail-list"><div><dt>รูปแบบ</dt><dd>' + escape(b.type) + '</dd></div><div><dt>วันที่</dt><dd>' + escape(C.thaiDate(b.date)) + '</dd></div><div><dt>เวลา</dt><dd>' + escape(b.startTime + ' – ' + b.endTime) + ' น.</dd></div><div><dt>ยอดชำระ</dt><dd>' + money(b.price) + ' บาท</dd></div></dl>' + (b.changeType ? '<div class="message">รอพิจารณาคำขอ' + (b.changeType === 'cancel' ? 'ยกเลิก' : 'เลื่อนคิวเป็น ' + escape(C.thaiDate(b.requestedDate) + ' ' + b.requestedStartTime)) + '<br>คิวเดิมยังคงอยู่จนกว่าจะได้รับอนุมัติ</div>' : '') + (b.refundStatus ? '<div class="message">' + (b.refundStatus === 'REVIEW' ? 'เรื่องยอดโอนหรือคืนเงินอยู่ระหว่างตรวจสอบ กรุณาติดต่อผู้ให้บริการ' : 'ผู้ให้บริการบันทึกผลการตรวจสอบยอดโอนแล้ว หากมีข้อสงสัยกรุณาติดต่อโดยตรง') + '</div>' : '') + '<button class="secondary wide" id="refreshBooking">↻ ตรวจสถานะล่าสุด</button>' + linkBox() + (canChange && !b.changeType ? '<div class="request-box"><h3>ต้องการเปลี่ยนแปลงนัดหมาย?</h3><p class="hint">ส่งคำขอให้ผู้ให้บริการพิจารณา การส่งคำขอยังไม่เปลี่ยนคิวหรือคืนเงินอัตโนมัติ</p><form id="changeForm"><label for="changeKind">ประเภทคำขอ</label><select id="changeKind"><option value="reschedule">ขอเลื่อนคิว</option><option value="cancel">ขอยกเลิก</option></select><div id="rescheduleFields"><label for="changeDate">วันที่ต้องการเลื่อนไป</label><select id="changeDate"><option value="">กำลังโหลดวันว่าง…</option></select><label for="changeTime">เวลาใหม่</label><select id="changeTime"><option value="">เลือกวันที่ก่อน</option></select></div><label for="changeReason">เหตุผล</label><textarea id="changeReason" required minlength="3" maxlength="500" rows="3"></textarea><p id="changeError" class="inline-error" role="alert"></p><button class="primary wide" type="submit" id="changeSubmit">ส่งคำขอให้พิจารณา</button></form></div>' : '') + '<p class="hint">' + escape(state.data ? state.data.contactText : '') + '</p></section>';
+    wireLinks(); $('refreshBooking').onclick = function () { lookup(true).catch(function (e) { msg(e.message, 'error'); }); };
+    if ($('changeForm')) { $('changeKind').onchange = function () { $('rescheduleFields').hidden = this.value !== 'reschedule'; }; $('changeForm').onsubmit = submitChange; loadChangeDays(); }
+    if (['PENDING', 'CONFIRMED'].includes(b.status)) state.poll = setInterval(function () { if (!document.hidden && !state.busy) lookup(false).catch(function () {}); }, 30000);
+  }
+  async function loadChangeDays() {
+    try { var data = await request('GET'); state.data = data; var days = data.days.filter(function (d) { return (d.slots[state.booking.serviceId] || []).length; }); if (!$('changeDate')) return; $('changeDate').replaceChildren(new Option(days.length ? 'เลือกวันใหม่' : 'ยังไม่มีวันว่าง กรุณาติดต่อผู้ให้บริการ', '')); days.forEach(function (d) { $('changeDate').add(new Option(C.thaiDate(d.date), d.date)); }); $('changeDate').onchange = function () { var day = data.days.find(function (d) { return d.date === $('changeDate').value; }); $('changeTime').replaceChildren(new Option('เลือกเวลาใหม่', '')); (day && day.slots[state.booking.serviceId] || []).forEach(function (s) { $('changeTime').add(new Option(s.start + ' – ' + s.end, s.start)); }); }; } catch (e) { if ($('changeError')) $('changeError').textContent = e.message; }
+  }
+  async function submitChange(e) { e.preventDefault(); if (state.busy) return; try { var p = { action: 'requestChange', kind: $('changeKind').value, reason: $('changeReason').value.trim(), date: $('changeDate').value, startTime: $('changeTime').value }; if (p.kind === 'reschedule' && (!p.date || !p.startTime)) throw new Error('กรุณาเลือกวันและเวลาใหม่'); state.busy = true; $('changeSubmit').disabled = true; var r = await request('POST', Object.assign(p, state.credentials)); state.booking = r.booking; routeBooking(); msg('ส่งคำขอแล้ว คิวเดิมยังอยู่จนกว่าจะได้รับอนุมัติ', 'success'); } catch (error) { if ($('changeError')) $('changeError').textContent = error.message; } finally { state.busy = false; if ($('changeSubmit')) $('changeSubmit').disabled = false; } }
+  async function lookup(render) { var r = await request('POST', Object.assign({ action: 'lookup' }, state.credentials)); var changed = !state.booking || r.booking.revision !== state.booking.revision; state.booking = r.booking; setClock(r.booking.serverNow); if (render || changed) { routeBooking(); msg(''); } }
+  function parseLink(value) { var match; try { var url = new URL(value, location.href); match = /^#manage=(PMY-[A-F0-9]{12})\.([a-f0-9]{64})$/.exec(url.hash); } catch (_) {} if (!match) throw new Error('ลิงก์ไม่ถูกต้อง กรุณาวางลิงก์จัดการการจองให้ครบ'); return { id: match[1], token: match[2] }; }
+  $('detailsForm').onsubmit = hold;
+  $('bookingDate').onchange = function () { state.date = this.value; state.start = ''; state.request = null; renderSlots(); };
+  $('refreshAvailability').onclick = function () { loadAvailability(false); };
+  $('contactChannel').onchange = function () { var phone = this.value === 'phone'; $('contactLabel').textContent = phone ? 'เบอร์โทรศัพท์ *' : 'LINE ID *'; $('contactValue').type = phone ? 'tel' : 'text'; $('contactValue').placeholder = phone ? 'เช่น 0812345678' : 'LINE ID ของคุณ'; $('contactValue').value = ''; };
+  $('openLookup').onclick = function () { msg(''); show('lookupView'); };
+  $('newBooking').onclick = function () { if (state.booking && state.booking.status === 'HOLD' && !confirm('คิวที่พักไว้จะยังอยู่จนหมดเวลา กรุณาเก็บลิงก์ก่อนเริ่มรายการใหม่ ต้องการจองรายการใหม่หรือไม่?')) return; history.replaceState(null, '', location.pathname + location.search); state.booking = null; state.credentials = null; state.request = null; state.start = ''; $('detailsForm').reset(); show('bookingView'); loadAvailability(false); };
+  $('lookupForm').onsubmit = async function (e) { e.preventDefault(); try { state.credentials = parseLink($('manageLinkInput').value); await lookup(true); saveCredentials(); } catch (error) { msg(error.message, 'error'); } };
+  window.addEventListener('hashchange', function () { if (location.hash.startsWith('#manage=')) openFromHash(); });
+  async function openFromHash() { try { state.credentials = parseLink(location.href); await lookup(true); saveCredentials(); } catch (e) { show('lookupView'); msg(e.message, 'error'); } }
+  if (demoMode) { $('environment').hidden = false; $('environment').innerHTML = 'ตัวอย่างระบบ · ข้อมูลอยู่ในเบราว์เซอร์นี้เท่านั้น ไม่มีการจอง ชำระเงิน หรือส่ง LINE จริง <a href="admin-demo.html" target="_blank" rel="noopener">ทดลองหน้าจัดการคิว ↗</a>'; }
+  else if (!cfg.apiUrl) { $('environment').hidden = false; $('environment').innerHTML = 'ระบบรุ่นใหม่กำลังเตรียมเปิดใช้งาน <a href="?demo=1">ดูตัวอย่างขั้นตอนการจอง ↗</a>'; state.data = { services: C.SERVICES, days: [], bookingOpen: false }; renderServices(); renderDates(); }
+  loadAvailability(false).then(async function () {
+    if (location.hash.startsWith('#manage=')) return openFromHash();
+    var saved; try { saved = JSON.parse(sessionStorage.getItem('bookingpmy-pending' + (demoMode ? '-demo' : ''))); } catch (_) {}
+    if (saved) try { var recovered = await request('POST', Object.assign({}, saved, { action: 'hold' })); state.credentials = { id: recovered.booking.id, token: saved.token }; state.booking = recovered.booking; setClock(recovered.booking.serverNow); saveCredentials(); sessionStorage.removeItem('bookingpmy-pending' + (demoMode ? '-demo' : '')); routeBooking(); } catch (e) { msg('ตรวจรายการเดิมไม่สำเร็จ: ' + e.message, 'error'); }
+  });
+})();
+
+</script>
 </body>
 </html>
